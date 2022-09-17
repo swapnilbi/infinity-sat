@@ -1,6 +1,6 @@
 package com.sat.service;
 
-import com.sat.entity.Department;
+import com.sat.entity.*;
 import com.sat.exception.BusinessException;
 
 import java.util.List;
@@ -16,6 +16,31 @@ public interface IAdminService {
 
     List<Department> getDepartments();
 
+    OEStructure createOEStructure(OEStructure oeStructure) throws BusinessException;
 
+    Optional<OEStructure> getOEStructureByCode(String code);
+
+    OEStructure getOEStructure(Long id);
+    List<OEStructure> getOEStructures(Long departmentId);
+
+    List<OEStructure> getOEStructures(List<Long> departmentIds);
+
+    Office getOffice(Long id);
+
+    Office createOffice(Office office) throws BusinessException;
+
+    List<Office> getOfficeList() throws BusinessException;
+
+    Floor getFloor(Long id);
+
+    Floor createFloor(Floor floor) throws BusinessException;
+
+    List<Floor> getFloors(Long officeId);
+
+    Zone getZone(Long id);
+
+    Zone createZone(Zone zone) throws BusinessException;
+
+    List<Zone> getZones(Long floorId);
 
 }

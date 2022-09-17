@@ -52,10 +52,10 @@ export class SidebarComponent implements OnInit {
       },
       {
         "id" : 2,
-        "title" : "Manage Space",
+        "title" : "Space Allotment",
         "index" : 2,
         "icon" : "fas fa-cog",
-        "url" : "sat/space/manage",          
+        "url" : "sat/space/allotment",          
         "roles" : ["ADMIN"]
       }      
     ];

@@ -7,28 +7,28 @@ import java.util.Objects;
 
 @Data
 @Entity
-@Table(name = "oe_structure")
-public class OEStructure {
+@Table(name = "zone")
+public class Zone {
 
 	@Id
 	@GeneratedValue
 	private long id;
-	@Column(name = "code")
-	private String code;
+
 	@Column(name = "name")
 	private String name;
-	@Column(name = "parent")
-	private Long parentId;
-	private Integer level;
-	@Column(name = "department_id")
-	private Long departmentId;
+
+	@Column(name = "total_no_seats")
+	private Integer totalNoSeats;
+
+	@Column(name = "floor_id")
+	private Long floorId;
 
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
-		OEStructure that = (OEStructure) o;
-		return id == that.id;
+		Zone zone = (Zone) o;
+		return id == zone.id;
 	}
 
 	@Override

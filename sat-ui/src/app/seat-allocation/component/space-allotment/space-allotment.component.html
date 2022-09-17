@@ -1,0 +1,83 @@
+<div class="container-div">
+
+    <div class="d-flex">
+
+      <div class="mr-auto p-2">
+        <h6>  &nbsp; <strong>View Allotment</strong></h6>
+      </div>
+      <div class="p-2">
+        <button (click)="createAllotment()" class="btn btn-primary btn-sm"> <i class="fas fa-plus"></i> New</button>        
+      </div>    
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>          
+          <th scope="col">#</th>
+          <th scope="col">Office</th>
+          <th scope="col">Floor</th>
+          <th scope="col">Zone</th>
+          <th scope="col">Division - OE Code</th>
+          <th scope="col">Seats</th>
+          <!--<th scope="col">From Date</th>
+          <th scope="col">To Date</th> -->
+        </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let allotment of allotmentList;  let i = index ">             
+            <th scope="row">{{i+1}}</th>
+            <td>{{allotment.officeName}}</td>
+            <td>
+              <span class="badge badge-primary"> {{allotment.floorName}}</span>              
+            <td>
+              <span class="badge badge-primary"> {{allotment.zoneName}}</span>
+            </td>
+            <td>{{allotment.divisionName}}</td>
+            <td>{{allotment.noOfSeats}}</td>
+          </tr>  
+        </tbody>
+      </table>
+
+      <div class="d-flex">
+
+        <div class="mr-auto p-2">
+          <h6>  &nbsp; <strong>Space Capacity</strong></h6>
+        </div>
+      </div>
+  
+      <table class="table table-striped">
+        <thead>
+        <tr>          
+          <th scope="col">#</th>
+          <th scope="col">Office</th>
+          <th scope="col">Floor</th>
+          <th scope="col">Zone</th>
+          <th scope="col">Total Capacity</th>
+          <th scope="col">Alloted Seats</th>
+          <th scope="col">Remaining Seats</th>        
+        </tr>
+        </thead>
+  
+        <tbody>
+          <tr *ngFor="let capacity of spaceCapacityList;  let i = index ">             
+            <th scope="row">{{i+1}}</th>
+            <td>{{capacity.office}}</td>
+            <td>              
+              <span class="badge badge-primary"> {{capacity.floor}}</span>
+            </td>
+            <td>
+              <span class="badge badge-primary"> {{capacity.zone}}</span>
+            </td>
+            <td>{{capacity.totalNoSeats}}</td>
+            <td>{{capacity.allotedSeats}}</td>
+            <td> 
+              <span *ngIf="capacity.totalNoSeats - capacity.allotedSeats == 0" class="badge badge-success">Full</span>
+              <span *ngIf="capacity.totalNoSeats - capacity.allotedSeats > 0"> {{capacity.totalNoSeats - capacity.allotedSeats }} </span>               
+            </td>
+          </tr>  
+        </tbody>
+      </table>
+
+      
+</div>

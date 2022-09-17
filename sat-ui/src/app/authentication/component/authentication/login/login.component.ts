@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
         this.authenticationService.getUserProfile().subscribe(response => {    
           this.loaderService.hide();          
           this.userAuthService.setUser(response);                 
-          this.router.navigate(['challenges']);                      
+          this.router.navigate(['sat']);                      
         });        
       }, error => {                  
         this.loaderService.hide();          

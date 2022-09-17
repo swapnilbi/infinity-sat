@@ -1,0 +1,113 @@
+<div class="container-div">  
+    <form [formGroup]="allotmentForm">
+        <div class="d-flex">
+        <div class="mr-auto p-2">
+            <h6> <a (click)="back()" *ngIf="true"><i class="fa fa-arrow-left" aria-hidden="true"></i></a> &nbsp;
+                 <strong *ngIf="!allotmentId">Create Allotment</strong>
+                 <strong *ngIf="allotmentId">Update Allotment</strong>
+            </h6>
+        </div>
+        <div class="p-2">
+            <button (click)="createAllotment(allotmentForm.value)" *ngIf="!allotmentId" [disabled]="!allotmentForm.valid" type="submit" class="btn btn-info btn-sm"> <i class="fas fa-save"></i> Save</button>        
+            <button (click)="updateAllotment(allotmentForm.value)" *ngIf="allotmentId" [disabled]="!allotmentForm.valid" type="submit" class="btn btn-info btn-sm"> <i class="fas fa-save"></i> Update</button>        
+        </div>    
+        </div>
+
+        <div class="row" *ngIf="createAllotmentDetails">
+            <div class="col-12">      
+
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="officeId">Office</label>
+                        <select formControlName="office" class="form-control" id="type">
+                            <option *ngFor="let office of createAllotmentDetails.officeList" [ngValue]="office">
+                                {{ office.name }}
+                            </option>                        
+                        </select>                       
+                    </div> 
+                    
+                    <div class="form-group col-md-3">
+                        <label for="floor">Floor </label>
+                        <select formControlName="floor" class="form-control" id="type">
+                            <option *ngFor="let floor of allotmentForm.value.office.floorList" [ngValue]="floor">
+                                {{ floor.name }}
+                            </option>                        
+                        </select>                       
+                    </div>                     
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="officeId">Zone</label>
+                        <select formControlName="zone" (change)="onZoneChange(allotmentForm.value.zone)" class="form-control" id="type">
+                            <option *ngFor="let zone of allotmentForm.value.floor.zoneList" [ngValue]="zone">
+                                {{ zone.name }}
+                            </option>                        
+                        </select>                       
+                    </div>                                                        
+
+                    <div class="form-group col-md-3">
+                        <label for="floor">Seats </label>
+                        <div class="input-group mb-3">
+                            <input type="text" formControlName="noOfSeats" class="form-control" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                               <span class="input-group-text" id="basic-addon2" *ngIf="allotmentForm.value.zone">Seats Available - {{ allotmentForm.value.zone.seatsAvailable }}</span>
+                            </div>
+                        </div>
+                    </div>  
+                    
+                </div>
+
+                <div class="form-row">
+                   
+                    <div class="form-group col-md-3">
+                        <label for="officeId">Division</label>
+                        <select formControlName="division" class="form-control" id="type">
+                            <option *ngFor="let division of createAllotmentDetails.divisionList" [ngValue]="division">
+                                {{ division.name }}
+                            </option>                        
+                        </select>                       
+                    </div>                                         
+                </div>
+
+
+                <!--
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="name">From Date</label>
+                        <div class="input-group">                            
+                            <input type="text"
+                            formControlName="fromDate"
+                            placeholder="Start Date"
+                            class="form-control"
+                            [bsConfig]="{withTimepicker: true, rangeInputFormat : 'DD/MM/YYYY h:mm a', dateInputFormat: 'DD/MM/YYYY h:mm A'}"
+                            bsDatepicker
+                            >
+                            <div class="input-group-prepend">
+                                <div class="input-group-text" id="btnGroupAddon"> <i class="fa fa-calendar" aria-hidden="true"></i> </div>
+                            </div>
+                        </div>                        
+                    </div>
+                    
+                    <div class="form-group col-md-3">
+                        <label for="name">To Date</label>
+                        <div class="input-group">                            
+                            <input type="text"
+                            formControlName="toDate"
+                            placeholder="End Date"
+                            class="form-control"
+                            [bsConfig]="{withTimepicker: true, rangeInputFormat : 'DD/MM/YYYY, h:mm a', dateInputFormat: 'DD/MM/YYYY, h:mm A'}"
+                            bsDatepicker
+                            >
+                            <div class="input-group-prepend">
+                                <div class="input-group-text" id="btnGroupAddon"> <i class="fa fa-calendar" aria-hidden="true"></i> </div>
+                            </div>
+                        </div>                        
+                    </div>                 
+                </div> 
+                -->
+            </div>       
+        </div>
+    </form>
+  </div>
+  
