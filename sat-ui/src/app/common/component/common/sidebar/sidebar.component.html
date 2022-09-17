@@ -1,0 +1,34 @@
+<div class="dashboard-nav" *ngIf="userProfile">  
+  <div class="sidebar-profile">
+    <div class="user-pic">
+      <img class="img-responsive img-rounded" [src]="getUserImage()" alt="User picture">      
+    </div>
+    <div class="user-info">
+      <span class="user-name"><strong>{{userProfile.fullName}}</strong>
+      </span>
+      <span class="user-role" *ngIf="userProfile.roles.indexOf('ADMIN') !=-1">Admin</span>      
+    </div>
+  </div>
+  <nav class="dashboard-nav-list"> 
+    
+    <ng-template ngFor let-menu [ngForOf]="menus | async">
+      <a *ngIf="!menu.subMenus || menu.subMenus.length == 0" (click)="nevigate(menu)" [ngClass]="{'active':isSelected(menu) }" class="dashboard-nav-item active">
+        <i class="{{menu.icon}}"></i> {{menu.title}}
+      </a>      
+
+      <div *ngIf="menu.subMenus && menu.subMenus.length > 0" class='dashboard-nav-dropdown' [ngClass]="{'show':menu.showDropdown}">
+        <a (click)="nevigate(menu)" (click)="toggleDropdown(menu)" [ngClass]="{'active':isSelected(menu)}" class="dashboard-nav-item dashboard-nav-dropdown-toggle">
+          <i class="{{menu.icon}}"></i> {{menu.title}}
+        </a>      
+        <div class='dashboard-nav-dropdown-menu'>
+          <a *ngFor="let subMenu of menu.subMenus" class="dashboard-nav-dropdown-item" (click)="nevigate(subMenu)" [ngClass]="{'active':isSelected(subMenu)}">
+            <i class="{{subMenu.icon}}"></i> &nbsp; {{subMenu.title}}
+          </a>                
+        </div>
+      </div> 
+
+    </ng-template>                 
+    <div class="nav-item-divider"></div>    
+    <a class="dashboard-nav-item" (click)="logout()"><i class="fas fa-sign-out-alt"></i> Logout </a>
+  </nav>
+</div>
