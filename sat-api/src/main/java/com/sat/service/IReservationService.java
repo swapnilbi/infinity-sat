@@ -21,4 +21,8 @@ public interface IReservationService {
     List<SeatBookingDetails> getBookingHistory(Long employeeId);
 
     List<SeatDetails> getNextBookingSlots(BookSeatInput bookSeatInput);
+
+    void cancelBooking(Long id);
+
+    List<SeatBookingDetails> getReservations(SearchSeatInput searchSeatInput);
 }

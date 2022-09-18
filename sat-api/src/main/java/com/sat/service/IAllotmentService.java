@@ -30,4 +30,6 @@ public interface IAllotmentService {
     List<AllotmentDetails> getSplittedAllotments(Long employeeId);
 
     SeatAllotment splitAllotment(SplitAllotmentInput splitAllotmentInput);
+
+    void deleteAllotment(Long id) throws BusinessException;
 }

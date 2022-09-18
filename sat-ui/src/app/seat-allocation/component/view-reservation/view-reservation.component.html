@@ -3,7 +3,7 @@
         <div class="d-flex">
             <div class="mr-auto p-2">
                 <h6> <a (click)="back()" *ngIf="true"><i class="fa fa-arrow-left" aria-hidden="true"></i></a> &nbsp;
-                    <strong>New Reservation</strong>                 
+                    <strong>View Reservation</strong>                 
                 </h6>
             </div>        
         </div>
@@ -51,10 +51,35 @@
                     </div>                                         
                 </div>
 
-                <button type="submit" [disabled]="!searchForm.valid" (click)="searchSeats(searchForm.value)" class="btn btn-info"> <i class="fas fa-search"></i> Search</button>                    
+                <button type="submit" [disabled]="!searchForm.valid" (click)="viewReservations(searchForm.value)" class="btn btn-info"> <i class="fas fa-search"></i> View</button>                    
 
             </div>       
         </div>
+
+        <table class="table table-striped" *ngIf="reservationList && reservationList.length > 0">
+            <thead>
+            <tr>                    
+              <th scope="col">#</th>              
+              <th scope="col">Floor</th>
+              <th scope="col">Zone</th>          
+              <th scope="col">Seat Number</th>
+              <th scope="col">Employee Name</th>
+              <th scope="col">Booking Date</th>                        
+            </tr>
+            </thead>
+    
+            <tbody>
+              <tr *ngFor="let reservation of reservationList;  let i = index ">             
+                <th scope="row">{{i+1}}</th>                
+                <td>{{reservation.floorName}}</td>
+                <td>{{reservation.zoneName}}</td>
+                <td>{{reservation.seatNumber}}</td>
+                <td>{{reservation.employeeName}}</td>
+                <td>{{reservation.startDate | date: 'dd/MM/yy'}}</td>                            
+              </tr>  
+            </tbody>
+          </table>
+
     </form>
   </div>
   

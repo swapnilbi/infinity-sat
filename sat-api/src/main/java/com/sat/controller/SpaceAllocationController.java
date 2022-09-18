@@ -33,6 +33,13 @@ public class SpaceAllocationController {
         return new Response<>(seatAllotment);
     }
 
+    @DeleteMapping("allotment/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
+    public Response saveAllotment(@PathVariable Long id) throws BusinessException {
+        allotmentService.deleteAllotment(id);
+        return new Response<>();
+    }
+
     @PostMapping("allotment/split")
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public Response<SeatAllotment> splitAllotment(@RequestBody SplitAllotmentInput splitAllotmentInput) throws BusinessException {

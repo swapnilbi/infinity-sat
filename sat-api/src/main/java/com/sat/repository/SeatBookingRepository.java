@@ -1,7 +1,6 @@
 package com.sat.repository;
 
 
-import com.sat.entity.Floor;
 import com.sat.entity.SeatBooking;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -17,6 +16,8 @@ public interface SeatBookingRepository extends JpaRepository<SeatBooking, Long> 
 
     Optional<SeatBooking> findByZoneIdAndSeatNumberAndStartDate(Long zoneId, Integer seatNo, Date startDate);
 
-    List<SeatBooking> findByZoneIdAndStartDate(Long employeeId, Date startDate);
+    List<SeatBooking> findByZoneIdAndStartDate(Long zoneId, Date startDate);
+
+    List<SeatBooking> findByFloorIdAndStartDate(Long floorId, Date startDate);
 
 }

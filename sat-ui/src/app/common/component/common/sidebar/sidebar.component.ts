@@ -52,6 +52,14 @@ export class SidebarComponent implements OnInit {
       },
       {
         "id" : 2,
+        "title" : "Reservation History",
+        "index" : 1,
+        "url" : "sat/reservation/history",
+        "icon" : "fa-solid fa-history",        
+        "roles" : ["EMPLOYEE"]        
+      },
+      {
+        "id" : 3,
         "title" : "Space Allotment",
         "index" : 2,
         "icon" : "fas fa-cog",
@@ -59,13 +67,21 @@ export class SidebarComponent implements OnInit {
         "roles" : ["ADMIN"]
       },
       {
-        "id" : 2,
+        "id" : 4,
         "title" : "Space Distribution",
-        "index" : 2,
+        "index" : 4,
         "icon" : "fas fa-cog",
         "url" : "sat/space/distribute",          
         "roles" : ["MANAGER"]
-      }      
+      },
+      {
+        "id" : 5,
+        "title" : "View Reservation",
+        "index" : 3,
+        "icon" : "fas fa-search",
+        "url" : "sat/reservation/view",          
+        "roles" : ["MANAGER","ADMIN"]
+      }         
     ];
       let filteredMenuConfig : any = [];
       menuConfig.forEach(function (menu: any) {

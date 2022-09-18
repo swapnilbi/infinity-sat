@@ -160,4 +160,13 @@ public class AllotmentService implements IAllotmentService {
 		seatAllotmentRepository.save(seatAllotment);
 		return seatAllotment;
 	}
+
+	@Override
+	public void deleteAllotment(Long id) throws BusinessException {
+		List<SeatAllotment> childAllotments = seatAllotmentRepository.findByParentId(id);
+		if(childAllotments!=null && !childAllotments.isEmpty()){
+			throw new BusinessException("This allotment can not be deleted");
+		}
+		seatAllotmentRepository.deleteById(id);
+	}
 }

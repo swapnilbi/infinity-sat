@@ -87,7 +87,7 @@ export class CreateAllotmentComponent implements OnInit {
   getAllotmentForm(allotmentForm : any){
     let createAllotmentForm = {
       officeId : allotmentForm.office.id,
-      floorId : allotmentForm.office.id,
+      floorId : allotmentForm.floor.id,
       zoneId : allotmentForm.zone.id,
       divisionId : allotmentForm.division.id,
       noOfSeats : allotmentForm.noOfSeats

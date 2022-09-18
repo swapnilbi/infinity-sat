@@ -140,9 +140,11 @@ public class ReservationServiceImpl implements IReservationService {
 		if(existingBooking.isPresent()){
 			throw new BusinessException("This seat is already booked");
 		}
+		Zone zone = adminService.getZone(bookSeatInput.getZoneId());
 		SeatBooking seatBooking = new SeatBooking();
 		seatBooking.setEmployeeId(employeeId);
 		seatBooking.setSeatNumber(bookSeatInput.getSeatNo());
+		seatBooking.setFloorId(zone.getFloorId());
 		seatBooking.setZoneId(bookSeatInput.getZoneId());
 		seatBooking.setBookedAt(new Date());
 		seatBooking.setStartDate(bookSeatInput.getStartDate());
@@ -158,21 +160,8 @@ public class ReservationServiceImpl implements IReservationService {
 
 	@Override
 	public List<SeatBookingDetails> getBookingHistory(Long employeeId) {
-		List<SeatBookingDetails> bookingDetailsList = new ArrayList<>();
 		List<SeatBooking> seatBookings = seatBookingRepository.findByEmployeeId(employeeId);
-		if(seatBookings!=null){
-			for(SeatBooking seatBooking : seatBookings){
-				SeatBookingDetails seatBookingDetails = new SeatBookingDetails(seatBooking);
-				Zone zone = adminService.getZone(seatBooking.getZoneId());
-				seatBookingDetails.setZoneName(zone.getName());
-				Floor floor = adminService.getFloor(zone.getFloorId());
-				Office office = adminService.getOffice(floor.getOfficeId());
-				seatBookingDetails.setOfficeName(office.getName());
-				seatBookingDetails.setFloorName(floor.getName());
-				bookingDetailsList.add(seatBookingDetails);
-			}
-		}
-		return bookingDetailsList;
+		return getSeatBookingDetails(seatBookings);
 	}
 
 	@Override
@@ -195,6 +184,50 @@ public class ReservationServiceImpl implements IReservationService {
 			nextBookingSlots.add(seatDetails);
 		}
 		return nextBookingSlots;
+	}
+
+	@Override
+	public void cancelBooking(Long id) {
+		seatBookingRepository.deleteById(id);
+	}
+
+	@Override
+	public List<SeatBookingDetails> getReservations(SearchSeatInput searchSeatInput) {
+		searchSeatInput.setStartDate(DateUtility.zeroTime(searchSeatInput.getStartDate()));
+		List<SeatBooking> seatBookings = seatBookingRepository.findByFloorIdAndStartDate(searchSeatInput.getFloorId(),searchSeatInput.getStartDate());
+		List<SeatBookingDetails> bookingDetailsList = new ArrayList<>();
+		if(seatBookings!=null){
+			for(SeatBooking seatBooking : seatBookings){
+				SeatBookingDetails seatBookingDetails = new SeatBookingDetails(seatBooking);
+				Zone zone = adminService.getZone(seatBooking.getZoneId());
+				seatBookingDetails.setZoneName(zone.getName());
+				Floor floor = adminService.getFloor(zone.getFloorId());
+				Office office = adminService.getOffice(floor.getOfficeId());
+				Employee employee = employeeService.getEmployeeById(seatBooking.getEmployeeId()).get();
+				seatBookingDetails.setOfficeName(office.getName());
+				seatBookingDetails.setFloorName(floor.getName());
+				seatBookingDetails.setEmployeeName(employee.getFullName());
+				bookingDetailsList.add(seatBookingDetails);
+			}
+		}
+		return bookingDetailsList;
+	}
+
+	private List<SeatBookingDetails> getSeatBookingDetails(List<SeatBooking> seatBookings){
+		List<SeatBookingDetails> bookingDetailsList = new ArrayList<>();
+		if(seatBookings!=null){
+			for(SeatBooking seatBooking : seatBookings){
+				SeatBookingDetails seatBookingDetails = new SeatBookingDetails(seatBooking);
+				Zone zone = adminService.getZone(seatBooking.getZoneId());
+				seatBookingDetails.setZoneName(zone.getName());
+				Floor floor = adminService.getFloor(zone.getFloorId());
+				Office office = adminService.getOffice(floor.getOfficeId());
+				seatBookingDetails.setOfficeName(office.getName());
+				seatBookingDetails.setFloorName(floor.getName());
+				bookingDetailsList.add(seatBookingDetails);
+			}
+		}
+		return bookingDetailsList;
 	}
 
 }

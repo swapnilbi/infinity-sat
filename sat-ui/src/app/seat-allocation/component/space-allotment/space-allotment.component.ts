@@ -1,6 +1,7 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 import { AlertService } from '../../../common/component/common/alert/alert-service.service';
 import { LoaderService } from '../../../common/component/common/loader/loader.service';
 import { AllotmentDetails } from '../../model/allotment-details.model';
@@ -49,6 +50,29 @@ export class SpaceAllotmentComponent implements OnInit {
       this.allotmentList = response;
       this.loaderService.hide();
     })
+  }
+
+  deleteAllotment(allotment : AllotmentDetails){
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes'
+    }).then((result) => {
+      if (result.isConfirmed) {        
+        this.loaderService.show();       
+        this.allotmentService.deleteAllotment(allotment.id).subscribe(response => {              
+            this.loaderService.hide();       
+            this.alertService.success('Allotment deleted successfully');
+            this.getAllotmentList();          
+          }, error => {
+            this.loaderService.hide();       
+          });   
+      }
+    })  
   }
 
   getSpaceCapacityList(){

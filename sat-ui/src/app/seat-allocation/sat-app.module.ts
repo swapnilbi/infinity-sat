@@ -13,6 +13,8 @@ import { AgGridModule } from 'ag-grid-angular';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { SplitAllotmentComponent } from './component/split-allotment/split-allotment.component';
 import { ReservationComponent } from './component/reservation/reservation.component';
+import { ReservationHistoryComponent } from './component/reservation-history/reservation-history.component';
+import { ViewReservationComponent } from './component/view-reservation/view-reservation.component';
 
 @NgModule({
   declarations: [        
@@ -21,7 +23,9 @@ import { ReservationComponent } from './component/reservation/reservation.compon
     CreateAllotmentComponent,
     SpaceDistributeComponent,
     SplitAllotmentComponent,
-    ReservationComponent        
+    ReservationComponent,
+    ReservationHistoryComponent,
+    ViewReservationComponent        
   ],
   imports: [    
     CommonModule,

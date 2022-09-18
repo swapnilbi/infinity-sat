@@ -19,6 +19,7 @@
           <th scope="col">Zone</th>
           <th scope="col">Division - OE Code</th>
           <th scope="col">Seats</th>
+          <th scope="col">Action</th>
           <!--<th scope="col">From Date</th>
           <th scope="col">To Date</th> -->
         </tr>
@@ -35,6 +36,7 @@
             </td>
             <td>{{allotment.divisionName}} - {{allotment.oeCode}}</td>
             <td>{{allotment.noOfSeats}}</td>
+            <td><a  class="dropdown-item" (click)="deleteAllotment(allotment)" *ngIf="true"><i class='fas fa-trash'></i> &nbsp; </a></td>
           </tr>  
         </tbody>
       </table>

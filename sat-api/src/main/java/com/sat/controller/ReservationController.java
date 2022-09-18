@@ -6,6 +6,7 @@ import com.sat.exception.BusinessException;
 import com.sat.model.*;
 import com.sat.service.IReservationService;
 import com.sat.utility.SecurityHelper;
+import org.hibernate.sql.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,10 +37,22 @@ public class ReservationController {
         return new Response<>(seatBooking);
     }
 
+    @DeleteMapping("cancel/{id}")
+    public Response cancelBooking(@PathVariable Long id) {
+        reservationService.cancelBooking(id);
+        return new Response<>();
+    }
+
     @PostMapping("book/nextSlots")
     public Response<List<SeatDetails>> getNextBookingSlots(@RequestBody BookSeatInput bookSeatInput) throws BusinessException {
         List<SeatDetails> nextBookingSlots = reservationService.getNextBookingSlots(bookSeatInput);
         return new Response<>(nextBookingSlots);
+    }
+
+    @PostMapping("book/view")
+    public Response<List<SeatBookingDetails>> getReservations(@RequestBody SearchSeatInput searchSeatInput) throws BusinessException {
+        List<SeatBookingDetails> bookingDetailsList = reservationService.getReservations(searchSeatInput);
+        return new Response<>(bookingDetailsList);
     }
 
     @GetMapping("book/history")

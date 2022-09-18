@@ -4,8 +4,10 @@ import { SatAppComponent } from './sat-app.component';
 import { HomeComponent } from './component/home/home.component';
 import { SpaceAllotmentComponent } from './component/space-allotment/space-allotment.component';
 import { CreateAllotmentComponent } from './component/create-allotment/create-allotment.component';
-import { SpaceDistributeComponent } from './component/space-distribute/space-distribute.component';
 import { ReservationComponent } from './component/reservation/reservation.component';
+import { ReservationHistoryComponent } from './component/reservation-history/reservation-history.component';
+import { SpaceDistributeComponent } from './component/space-distribute/space-distribute.component';
+import { ViewReservationComponent } from './component/view-reservation/view-reservation.component';
 
 const routes: Routes = [  
   {
@@ -31,10 +33,18 @@ const routes: Routes = [
           {
             path : "reservation/new",
             component : ReservationComponent
+          },
+          {
+            path : "reservation/history",
+            component : ReservationHistoryComponent
+          },
+          {
+            path : "reservation/view",
+            component : ViewReservationComponent
           },         
           {
             path : "",
-            component : HomeComponent
+            component : ReservationComponent
           }
         ]  
   }

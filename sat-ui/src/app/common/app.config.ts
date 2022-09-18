@@ -7,6 +7,7 @@ export const AppConfig = {
     GET_USER_PROFILE_URL : '/api/employee/profile',
     INIT_SPACE_ALLOTMENT : '/api/space/allotment/init',
     CREATE_ALLOTMENT : '/api/space/allotment',
+    DELETE_ALLOTMENT : '/api/space/allotment/:id',
     SPLIT_ALLOTMENT : '/api/space/allotment/split',
     GET_ALLOTMENTS_URL : '/api/space/allotments',
     GET_MANAGER_ALLOTMENTS_URL : '/api/space/allotment/manager',
@@ -16,6 +17,9 @@ export const AppConfig = {
     GET_MANAGER_SUB_DIVISION_LIST : '/api/admin/oe-structures/childrens',
     INIT_RESERVATION : '/api/reservation/init',
     SEARCH_SEATS : '/api/reservation/search',
+    VIEW_BOOKED_SEATS : '/api/reservation/book/view',
+    CANCEL_RESERVATION : '/api/reservation/cancel/:id',
+    RESERVATION_HISTORY_SEATS : '/api/reservation/book/history'
   }
 
 }

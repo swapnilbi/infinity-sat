@@ -16,6 +16,8 @@ public class SeatBooking {
 	private long id;
 	@Column(name = "employee_id")
 	private Long employeeId;
+	@Column(name = "floor_id")
+	private Long floorId;
 	@Column(name = "zone_id")
 	private Long zoneId;
 	@Column(name = "seat_number")

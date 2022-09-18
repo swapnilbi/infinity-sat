@@ -30,6 +30,20 @@ export class AllotmentService {
     );
   }
 
+  public deleteAllotment(id : number): Observable<any>{            
+    let queryParams: any = {
+      'id' : id
+    }        
+    const serviceUrl = HttpHelper.getUrl(AppConfig.SERVICE_URL.DELETE_ALLOTMENT,queryParams);    
+    return this.httpClient.delete<Response<any>>(serviceUrl)
+    .pipe(
+      map((data) => {
+        return data.data;
+      }),
+      tap(event => {})
+    );
+  }
+
   public getManagerAllotments(): Observable<Array<AllotmentDetails>>{        
     const serviceUrl = AppConfig.SERVICE_URL.GET_MANAGER_ALLOTMENTS_URL;    
     return this.httpClient.get<Response<Array<AllotmentDetails>>>(serviceUrl)
