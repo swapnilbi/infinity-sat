@@ -3,11 +3,14 @@ package com.sat.service.impl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sat.entity.*;
+import com.sat.exception.BusinessException;
 import com.sat.model.*;
+import com.sat.repository.SeatBookingRepository;
 import com.sat.service.IAdminService;
 import com.sat.service.IAllotmentService;
 import com.sat.service.IEmployeeService;
 import com.sat.service.IReservationService;
+import com.sat.utility.DateUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +28,9 @@ public class ReservationServiceImpl implements IReservationService {
 
 	@Autowired
 	private IAllotmentService allotmentService;
+
+	@Autowired
+	private SeatBookingRepository seatBookingRepository;
 
 	@Override
 	public CreateReservationDetails initReservation(Long employeeId) {
@@ -63,7 +69,7 @@ public class ReservationServiceImpl implements IReservationService {
 	}
 
 	@Override
-	public SearchSeatResult searchSeats(SearchSeatInput searchSeatInput, Long userId) throws JsonProcessingException {
+	public SearchSeatResult searchSeats(SearchSeatInput searchSeatInput, Long userId) throws JsonProcessingException, BusinessException {
 		SearchSeatResult searchSeatResult = new SearchSeatResult();
 		Floor floor = adminService.getFloor(searchSeatInput.getFloorId());
 		Employee employee =  employeeService.getEmployeeById(userId).get();
@@ -83,21 +89,8 @@ public class ReservationServiceImpl implements IReservationService {
 						zoneLayout.setZoneId(zoneDetails.getId());
 						zoneLayout.setZoneName(zoneDetails.getName());
 						// get seat details if allotment is present
-						if(allotmentsByZoneMap.containsKey(zoneDetails.getId())){
-							List<List<SeatDetails>> seatDetailsList = new ArrayList<>();
-							for(List<Integer> row : zoneLayoutConfig.getSeats()){
-								List<SeatDetails> seatDetailsRow = new ArrayList<>();
-								for(Integer seat : row){
-									SeatDetails seatDetails = new SeatDetails();
-									if(seat!=0){
-										seatDetails.setNumber(seat);
-									}else{
-										seatDetails.setHide(true);
-									}
-									seatDetailsRow.add(seatDetails);
-								}
-								seatDetailsList.add(seatDetailsRow);
-							}
+						if(searchSeatInput.isViewAll() || allotmentsByZoneMap.containsKey(zoneDetails.getId())){
+							List<List<SeatDetails>> seatDetailsList = getSeatLayout(zoneLayoutConfig, searchSeatInput);
 							zoneLayout.setSeats(seatDetailsList);
 						}
 						zonelayoutList.add(zoneLayout);
@@ -110,4 +103,74 @@ public class ReservationServiceImpl implements IReservationService {
 		}
 		return searchSeatResult;
 	}
+
+	private List<List<SeatDetails>> getSeatLayout(FloorLayoutConfig.Layout.ZoneLayout zoneLayoutConfig,SearchSeatInput searchSeatInput) throws BusinessException {
+		List<List<SeatDetails>> seatDetailsList = new ArrayList<>();
+		List<SeatBooking> seatBookings = searchSeatBookings(zoneLayoutConfig.getZoneId(),searchSeatInput.getStartDate());
+		Map<Integer, SeatBooking> seatBookingMap = seatBookings.stream().collect(Collectors.toMap(SeatBooking::getSeatNumber, item -> item));
+		for(List<Integer> row : zoneLayoutConfig.getSeats()){
+			List<SeatDetails> seatDetailsRow = new ArrayList<>();
+			for(Integer seat : row){
+				SeatDetails seatDetails = new SeatDetails();
+				if(seat!=0){
+					if(seatBookingMap.containsKey(seat)){
+						seatDetails.setBooked(true);
+						Employee employee = employeeService.getEmployeeById(seatBookingMap.get(seat).getEmployeeId()).get();
+						seatDetails.setBookedBy(employee.getFullName());
+					}
+					seatDetails.setNumber(seat);
+				}else{
+					seatDetails.setHide(true);
+				}
+				seatDetailsRow.add(seatDetails);
+			}
+			seatDetailsList.add(seatDetailsRow);
+		}
+		return seatDetailsList;
+	}
+
+	@Override
+	public SeatBooking bookSeat(BookSeatInput bookSeatInput, Long employeeId) throws BusinessException {
+		bookSeatInput.setStartDate(DateUtility.zeroTime(bookSeatInput.getStartDate()));
+		Optional<SeatBooking> existingBooking = seatBookingRepository.findByEmployeeIdAndStartDate(employeeId,bookSeatInput.getStartDate());
+		if(existingBooking.isPresent()){
+			throw new BusinessException("Booking already exist for the given date");
+		}
+		existingBooking = seatBookingRepository.findBySeatNumberAndStartDate(bookSeatInput.getSeatNo(),bookSeatInput.getStartDate());
+		if(existingBooking.isPresent()){
+			throw new BusinessException("This seat is already booked");
+		}
+		SeatBooking seatBooking = new SeatBooking();
+		seatBooking.setEmployeeId(employeeId);
+		seatBooking.setSeatNumber(bookSeatInput.getSeatNo());
+		seatBooking.setZoneId(bookSeatInput.getZoneId());
+		seatBooking.setBookedAt(new Date());
+		seatBooking.setStartDate(bookSeatInput.getStartDate());
+		seatBooking.setStatus(1);
+		seatBookingRepository.save(seatBooking);
+		return seatBooking;
+	}
+
+	@Override
+	public List<SeatBooking> searchSeatBookings(Long zoneId, Date startDate) throws BusinessException {
+		return seatBookingRepository.findByZoneIdAndStartDate(zoneId,DateUtility.zeroTime(startDate));
+	}
+
+	@Override
+	public List<SeatBookingDetails> getBookingHistory(Long employeeId) {
+		List<SeatBookingDetails> bookingDetailsList = new ArrayList<>();
+		List<SeatBooking> seatBookings = seatBookingRepository.findByEmployeeId(employeeId);
+		if(seatBookings!=null){
+			for(SeatBooking seatBooking : seatBookings){
+				SeatBookingDetails seatBookingDetails = new SeatBookingDetails(seatBooking);
+				Zone zone = adminService.getZone(seatBooking.getZoneId());
+				seatBookingDetails.setZoneName(zone.getName());
+				Floor floor = adminService.getFloor(zone.getFloorId());
+				seatBookingDetails.setFloorName(floor.getName());
+				bookingDetailsList.add(seatBookingDetails);
+			}
+		}
+		return bookingDetailsList;
+	}
+
 }

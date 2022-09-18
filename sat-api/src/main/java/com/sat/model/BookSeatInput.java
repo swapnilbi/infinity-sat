@@ -7,11 +7,10 @@ import java.util.Date;
 
 @Data
 @NoArgsConstructor
-public class SearchSeatInput {
+public class BookSeatInput {
 
-	private Long officeId;
-	private Long floorId;
+	private Long zoneId;
+	private Integer seatNo;
 	private Date startDate;
-	private boolean viewAll;
 
 }

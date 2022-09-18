@@ -39,6 +39,7 @@
                          <input type="text"
                             formControlName="startDate"
                             placeholder="Date"
+                            [minDate]="minDate"
                             class="form-control"
                             [bsConfig]="{ rangeInputFormat : 'DD/MM/YYYY h:mm a', dateInputFormat: 'DD/MM/YYYY'}"
                             bsDatepicker

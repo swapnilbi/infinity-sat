@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { map,tap } from 'rxjs/operators';
 import { Response } from 'src/app/common/model/response.model';
 import { CreateReservationDetails } from '../model/create-reservation-details.model';
+import { SearchSeatInput } from '../model/search-seat-input.model';
 
 
 @Injectable({
@@ -24,5 +25,17 @@ export class ReservationService {
       tap(event => {})
     );
   }
+
+  public searchSeats(searchSeatInput : SearchSeatInput): Observable<any>{        
+    const serviceUrl = AppConfig.SERVICE_URL.SEARCH_SEATS;
+    return this.httpClient.post<Response<any>>(serviceUrl,searchSeatInput)
+    .pipe(
+      map((data) => {
+        return data.data;
+      }),
+      tap(event => {})
+    );
+  }
+
 
 }
