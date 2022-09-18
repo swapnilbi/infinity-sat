@@ -5,6 +5,7 @@ import { HomeComponent } from './component/home/home.component';
 import { SpaceAllotmentComponent } from './component/space-allotment/space-allotment.component';
 import { CreateAllotmentComponent } from './component/create-allotment/create-allotment.component';
 import { SpaceDistributeComponent } from './component/space-distribute/space-distribute.component';
+import { ReservationComponent } from './component/reservation/reservation.component';
 
 const routes: Routes = [  
   {
@@ -26,7 +27,11 @@ const routes: Routes = [
           {
             path : "space/distribute",
             component : SpaceDistributeComponent
-          },          
+          },     
+          {
+            path : "reservation/new",
+            component : ReservationComponent
+          },         
           {
             path : "",
             component : HomeComponent

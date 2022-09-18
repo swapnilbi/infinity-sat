@@ -1,0 +1,59 @@
+<div class="container-div">  
+    <form [formGroup]="searchForm">
+        <div class="d-flex">
+            <div class="mr-auto p-2">
+                <h6> <a (click)="back()" *ngIf="true"><i class="fa fa-arrow-left" aria-hidden="true"></i></a> &nbsp;
+                    <strong>New Reservation</strong>                 
+                </h6>
+            </div>        
+        </div>
+
+        <div class="row" *ngIf="createReservationDetails">
+            <div class="col-12">      
+
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="officeId">Building</label>
+                        <select formControlName="office" class="form-control" id="type">
+                            <option *ngFor="let office of createReservationDetails.officeList" [ngValue]="office">
+                                {{ office.name }}
+                            </option>                        
+                        </select>                       
+                    </div> 
+                    
+                    <div class="form-group col-md-3">
+                        <label for="floor">Floor </label>
+                        <select formControlName="floor" class="form-control" id="type">
+                            <option *ngFor="let floor of searchForm.value.office.floorList" [ngValue]="floor">
+                                {{ floor.name }}
+                            </option>                        
+                        </select>                       
+                    </div>                     
+                </div>
+
+        
+                <div class="form-row">                   
+                    <div class="form-group col-md-3">
+                        <label for="officeId">Date</label>
+                        <div class="input-group">   
+                         <input type="text"
+                            formControlName="startDate"
+                            placeholder="Date"
+                            class="form-control"
+                            [bsConfig]="{ rangeInputFormat : 'DD/MM/YYYY h:mm a', dateInputFormat: 'DD/MM/YYYY'}"
+                            bsDatepicker
+                            >
+                            <div class="input-group-prepend">
+                                <div class="input-group-text" id="btnGroupAddon"> <i class="fa fa-calendar" aria-hidden="true"></i> </div>
+                            </div>
+                         </div>
+                    </div>                                         
+                </div>
+
+                <button type="submit" [disabled]="!searchForm.valid" (click)="searchSeats(searchForm.value)" class="btn btn-info"> <i class="fas fa-search"></i> Search</button>                    
+
+            </div>       
+        </div>
+    </form>
+  </div>
+  

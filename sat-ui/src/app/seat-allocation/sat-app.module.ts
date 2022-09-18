@@ -8,9 +8,11 @@ import { SatAppComponent } from './sat-app.component';
 import { SpaceAllotmentComponent } from './component/space-allotment/space-allotment.component';
 import { CreateAllotmentComponent } from './component/create-allotment/create-allotment.component';
 import { SpaceDistributeComponent } from './component/space-distribute/space-distribute.component';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { AgGridModule } from 'ag-grid-angular';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { SplitAllotmentComponent } from './component/split-allotment/split-allotment.component';
+import { ReservationComponent } from './component/reservation/reservation.component';
 
 @NgModule({
   declarations: [        
@@ -18,11 +20,13 @@ import { SplitAllotmentComponent } from './component/split-allotment/split-allot
     SpaceAllotmentComponent,
     CreateAllotmentComponent,
     SpaceDistributeComponent,
-    SplitAllotmentComponent        
+    SplitAllotmentComponent,
+    ReservationComponent        
   ],
   imports: [    
     CommonModule,
     AgGridModule,   
+    BsDatepickerModule,
     ModalModule.forRoot(),
     FormsModule, 
     SatAppRoutingModule,     

@@ -14,6 +14,7 @@ export const AppConfig = {
     GET_SPACE_CAPACITY_URL : '/api/space/capacity',
     GET_ALLOTMENTS_BY_ZONE_URL : '/api/space/allotment/zone/:zoneId',
     GET_MANAGER_SUB_DIVISION_LIST : '/api/admin/oe-structures/childrens',
+    INIT_RESERVATION : '/api/reservation/init',
   }
 
 }

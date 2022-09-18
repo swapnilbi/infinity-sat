@@ -1,36 +1,31 @@
-package com.sat.entity;
+package com.sat.model;
 
+import com.sat.entity.Floor;
+import com.sat.entity.Zone;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
 @Data
-@Entity
 @NoArgsConstructor
-@Table(name = "floor")
-public class Floor {
+public class FloorDetails {
 
-	@Id
-	@GeneratedValue
 	private long id;
-
-	@Column(name = "name")
 	private String name;
-
-	@Column(name = "office_id")
 	private Long officeId;
-
-	@Column(name = "floor_layout")
-	private String floorLayout;
-
-	@OneToMany(mappedBy="floorId", fetch = FetchType.EAGER)
 	private Set<Zone> zoneList;
 
-	public Floor(Long id){
+	public FloorDetails(Floor floor){
+		this.id = floor.getId();
+		this.name = floor.getName();
+		this.officeId =  floor.getOfficeId();
+		this.zoneList = floor.getZoneList();
+	}
+
+	public FloorDetails(Long id){
 		this.id = id;
 	}
 
@@ -38,7 +33,7 @@ public class Floor {
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
-		Floor floor = (Floor) o;
+		FloorDetails floor = (FloorDetails) o;
 		return id == floor.id;
 	}
 

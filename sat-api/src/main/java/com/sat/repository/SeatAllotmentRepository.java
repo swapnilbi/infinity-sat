@@ -37,6 +37,8 @@ public interface SeatAllotmentRepository extends JpaRepository<SeatAllotment, Lo
 
     List<SeatAllotment> findByDivisionId(Long divisinId);
 
+    List<SeatAllotment> findByFloorIdAndDivisionId(Long floorId, Long divisionId);
+
     @Query(value = "SELECT u FROM SeatAllotment u WHERE u.divisionId IN :divisionIdList")
     List<SeatAllotment> findByDivisionIds(@Param("divisionIdList") List<Long> divisionIdList);
 }

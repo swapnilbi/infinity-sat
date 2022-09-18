@@ -46,9 +46,9 @@ export class SidebarComponent implements OnInit {
         "id" : 1,
         "title" : "New Reservation",
         "index" : 1,
-        "url" : "sat/reservation",
+        "url" : "sat/reservation/new",
         "icon" : "fa-solid fa-calendar-days",        
-        "roles" : ["EMPLOYEE","ADMIN"]        
+        "roles" : ["EMPLOYEE"]        
       },
       {
         "id" : 2,

@@ -28,6 +28,9 @@ public class SeatAllotment {
 	private Date toDate;
 	@Column(name = "parent_allotment_id")
 	private Long parentId;
-
+	@Column(name = "start_seat_no")
+	private Integer startSeatNo;
+	@Column(name = "end_seat_no")
+	private Integer endSeatNo;
 
 }

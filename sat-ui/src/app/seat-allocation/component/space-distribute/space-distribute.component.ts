@@ -43,7 +43,7 @@ export class SpaceDistributeComponent implements OnInit {
   }
 
   public columnDefs: ColDef[] = [
-    { field: 'officeName', rowGroup: true, enableRowGroup: true, hide: true },
+    { field: 'officeName', headerName: 'Building', rowGroup: true, enableRowGroup: true, hide: true },
     { field: 'floorName', rowGroup: true, enableRowGroup: true, hide: true },
     { field: 'zoneName', rowGroup: true, enableRowGroup: true },
     { field: 'divisionName', enableRowGroup: true },

@@ -106,6 +106,16 @@ public class AllotmentService implements IAllotmentService {
 	}
 
 	@Override
+	public List<SeatAllotment> getAllotmentByDivision(Long divisionId) {
+		return seatAllotmentRepository.findByDivisionId(divisionId);
+	}
+
+	@Override
+	public List<SeatAllotment> getAllotments(Long floorId, Long divisionId) {
+		return seatAllotmentRepository.findByFloorIdAndDivisionId(floorId,divisionId);
+	}
+
+	@Override
 	public List<AllotmentDetails> getManagerAllotmentList(Long employeeId) {
 		Employee employee = employeeService.getEmployeeById(employeeId).get();
 		List<AllotmentDetails> allotmentDetailsList = new ArrayList<>();
