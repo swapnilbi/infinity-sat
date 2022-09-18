@@ -49,7 +49,7 @@ public class ReservationServiceImpl implements IReservationService {
 				if(!zones.contains(seatAllotment.getZoneId())){
 					Zone zone = adminService.getZone(seatAllotment.getZoneId());
 					zones.add(zone.getId());
-					floors.get(seatAllotment.getFloorId()).getZoneList().add(zone);
+					floors.get(seatAllotment.getFloorId()).getZoneList().add(new ZoneDetails(zone));
 				}
 			}
 			if(!floors.isEmpty()){
@@ -136,7 +136,7 @@ public class ReservationServiceImpl implements IReservationService {
 		if(existingBooking.isPresent()){
 			throw new BusinessException("Booking already exist for the given date");
 		}
-		existingBooking = seatBookingRepository.findBySeatNumberAndStartDate(bookSeatInput.getSeatNo(),bookSeatInput.getStartDate());
+		existingBooking = seatBookingRepository.findByZoneIdAndSeatNumberAndStartDate(bookSeatInput.getZoneId(),bookSeatInput.getSeatNo(),bookSeatInput.getStartDate());
 		if(existingBooking.isPresent()){
 			throw new BusinessException("This seat is already booked");
 		}
@@ -166,11 +166,35 @@ public class ReservationServiceImpl implements IReservationService {
 				Zone zone = adminService.getZone(seatBooking.getZoneId());
 				seatBookingDetails.setZoneName(zone.getName());
 				Floor floor = adminService.getFloor(zone.getFloorId());
+				Office office = adminService.getOffice(floor.getOfficeId());
+				seatBookingDetails.setOfficeName(office.getName());
 				seatBookingDetails.setFloorName(floor.getName());
 				bookingDetailsList.add(seatBookingDetails);
 			}
 		}
 		return bookingDetailsList;
+	}
+
+	@Override
+	public List<SeatDetails> getNextBookingSlots(BookSeatInput bookSeatInput) {
+		List<SeatDetails> nextBookingSlots = new ArrayList<>();
+		Calendar startTime = Calendar.getInstance();
+		startTime.setTime(DateUtility.zeroTime(bookSeatInput.getStartDate()));
+		int count = 5;
+		while(count-- > 0){
+			SeatDetails seatDetails = new SeatDetails();
+			seatDetails.setNumber(bookSeatInput.getSeatNo());
+			Optional<SeatBooking> seatBooking = seatBookingRepository.findByZoneIdAndSeatNumberAndStartDate(bookSeatInput.getZoneId(),bookSeatInput.getSeatNo(),startTime.getTime());
+			if(seatBooking.isPresent()){
+				seatDetails.setBooked(true);
+				Employee employee = employeeService.getEmployeeById(seatBooking.get().getEmployeeId()).get();
+				seatDetails.setBookedBy(employee.getFullName());
+			}
+			seatDetails.setDate(startTime.getTime());
+			startTime.add(Calendar.DAY_OF_MONTH,1);
+			nextBookingSlots.add(seatDetails);
+		}
+		return nextBookingSlots;
 	}
 
 }

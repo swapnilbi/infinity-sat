@@ -19,4 +19,6 @@ public interface IReservationService {
     List<SeatBooking> searchSeatBookings(Long zoneId, Date startDate) throws BusinessException;
 
     List<SeatBookingDetails> getBookingHistory(Long employeeId);
+
+    List<SeatDetails> getNextBookingSlots(BookSeatInput bookSeatInput);
 }

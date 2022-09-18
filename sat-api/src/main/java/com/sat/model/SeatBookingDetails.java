@@ -16,6 +16,7 @@ public class SeatBookingDetails {
 	private long id;
 	private Long employeeId;
 	private Long zoneId;
+	private String officeName;
 	private String floorName;
 	private String zoneName;
 	private Integer seatNumber;

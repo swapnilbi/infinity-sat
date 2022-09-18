@@ -15,7 +15,7 @@ public interface SeatBookingRepository extends JpaRepository<SeatBooking, Long> 
 
     Optional<SeatBooking> findByEmployeeIdAndStartDate(Long employeeId, Date startDate);
 
-    Optional<SeatBooking> findBySeatNumberAndStartDate(Integer seatNo, Date startDate);
+    Optional<SeatBooking> findByZoneIdAndSeatNumberAndStartDate(Long zoneId, Integer seatNo, Date startDate);
 
     List<SeatBooking> findByZoneIdAndStartDate(Long employeeId, Date startDate);
 

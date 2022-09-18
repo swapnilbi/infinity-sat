@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -16,13 +17,12 @@ public class FloorDetails {
 	private long id;
 	private String name;
 	private Long officeId;
-	private Set<Zone> zoneList;
+	private Set<ZoneDetails> zoneList = new HashSet<>();
 
 	public FloorDetails(Floor floor){
 		this.id = floor.getId();
 		this.name = floor.getName();
 		this.officeId =  floor.getOfficeId();
-		this.zoneList = floor.getZoneList();
 	}
 
 	public FloorDetails(Long id){

@@ -36,6 +36,12 @@ public class ReservationController {
         return new Response<>(seatBooking);
     }
 
+    @PostMapping("book/nextSlots")
+    public Response<List<SeatDetails>> getNextBookingSlots(@RequestBody BookSeatInput bookSeatInput) throws BusinessException {
+        List<SeatDetails> nextBookingSlots = reservationService.getNextBookingSlots(bookSeatInput);
+        return new Response<>(nextBookingSlots);
+    }
+
     @GetMapping("book/history")
     public Response<List<SeatBookingDetails>> getBookingHistory() throws BusinessException {
         List<SeatBookingDetails> bookingHistory = reservationService.getBookingHistory( SecurityHelper.getEmployeeId());
