@@ -1,0 +1,58 @@
+<!-- row config 1 statr floor contains 4 array each array depicts zone-->
+<!-- <div *ngFor="let zone of floor" class="row">
+<div class="col-12">
+    <ng-container *ngFor="let seat of zone" >
+        <app-seat [seatDetail]="seat" [isSeatSelected]="isCurrrentSeatSelected(seat)"></app-seat>
+    </ng-container>
+</div>
+</div>-->
+<!-- row config 1 end -->
+
+
+<!-- row config 2 statr -->
+<!--<div class="row">
+<div class="col-12 d-flex">
+    <div *ngFor="let zone of floor" class="col-{{12/floor.length}}">
+            <ng-container *ngFor="let seat of zone" >
+                <app-seat [seatDetail]="seat" [isSeatSelected]="isCurrrentSeatSelected(seat)"></app-seat>
+            </ng-container>
+    </div>
+</div>
+</div>-->
+<!-- row config 2 end -->
+
+
+
+<!-- column config 1 statr 
+<ng-container *ngFor="let section of floor">
+    <div class="row mb-3">
+        <ng-container *ngFor="let zone of section">
+            <div class="col-{{12/section.length}}">
+                <ng-container *ngFor="let seat of zone">
+                    <app-seat [seatDetail]="seat" [isSeatSelected]="isCurrrentSeatSelected(seat)"></app-seat>
+                </ng-container>
+            </div>
+        </ng-container>
+    </div>
+</ng-container>
+ column config 1 end -->
+
+
+<!-- column config 1 statr -->
+<ng-container *ngFor="let section of floorData['floorLayout']">
+    <div class="row mb-3">
+        <ng-container *ngFor="let zone of section['zones']">
+            <div class="col-{{12/section['zones'].length}}">
+                <ng-container *ngFor="let seatRow of zone['seats']">
+                    <div>
+                    <ng-container *ngFor="let seat of seatRow; index as i;">
+                            <app-seat [zoneDetail]="getZoneDetail(zone)"[seatDetail]="seat" [isSeatSelected]="isCurrrentSeatSelected(seat, zone['zoneName'])" [searchSeatInput]="floorData.searchSeatInput"></app-seat>
+                    </ng-container>
+                </div>
+                </ng-container>
+            </div>
+        </ng-container>
+    </div>
+</ng-container>
+<!-- column config 1 end -->
+

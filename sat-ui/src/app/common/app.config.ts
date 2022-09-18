@@ -16,6 +16,8 @@ export const AppConfig = {
     GET_MANAGER_SUB_DIVISION_LIST : '/api/admin/oe-structures/childrens',
     INIT_RESERVATION : '/api/reservation/init',
     SEARCH_SEATS : '/api/reservation/search',
+    BOOK_SEAT: '/api/reservation/book',
+    GET_NEXT_SLOTS: '/api/reservation/book/nextSlots'
   }
 
 }

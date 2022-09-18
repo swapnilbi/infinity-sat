@@ -1,0 +1,9 @@
+<div class="seat pe-auto can-book-{{!seatDetail.hide}}" [ngClass]="seatDetail.booked ? 'booked' : 'available'"[class.selected]="isSelected" (click)="updateSelectSeat()" cdkOverlayOrigin #trigger="cdkOverlayOrigin">
+    {{zoneDetail['zoneName']}} {{seatDetail.number}}
+</div>
+<ng-template
+cdkConnectedOverlay
+[cdkConnectedOverlayOrigin]="trigger"
+[cdkConnectedOverlayOpen]="isOpen">
+<app-seat-suggestion [zoneId]= "zoneDetail['zoneId']"[seatDetail]="seatDetail" [searchSeatInput]="searchSeatInput" (closeOverlay)="isOpen = !$event"></app-seat-suggestion>
+</ng-template>

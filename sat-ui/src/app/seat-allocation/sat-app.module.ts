@@ -13,7 +13,10 @@ import { AgGridModule } from 'ag-grid-angular';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { SplitAllotmentComponent } from './component/split-allotment/split-allotment.component';
 import { ReservationComponent } from './component/reservation/reservation.component';
-
+import { FloorPlanComponent } from './component/floor-plan/floor-plan.component';
+import { SeatComponent } from './component/seat/seat.component';
+import { SeatSuggestionComponent } from './component/seat-suggestion/seat-suggestion.component';
+import {OverlayModule} from '@angular/cdk/overlay';
 @NgModule({
   declarations: [        
     SatAppComponent,
@@ -21,7 +24,10 @@ import { ReservationComponent } from './component/reservation/reservation.compon
     CreateAllotmentComponent,
     SpaceDistributeComponent,
     SplitAllotmentComponent,
-    ReservationComponent        
+    ReservationComponent,
+    FloorPlanComponent,
+    SeatComponent,
+    SeatSuggestionComponent        
   ],
   imports: [    
     CommonModule,
@@ -33,7 +39,8 @@ import { ReservationComponent } from './component/reservation/reservation.compon
     AppCommonModule,                
     ReactiveFormsModule,    
     FormsModule,    
-    SweetAlert2Module.forRoot()    
+    SweetAlert2Module.forRoot(),
+    OverlayModule    
   ],
   providers: []  
 })

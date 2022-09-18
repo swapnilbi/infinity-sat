@@ -1,0 +1,50 @@
+.bg-color{
+    background-color: #ffffff;
+}
+.card {
+    border : 1px solid #eee;
+ box-shadow : 0 2px 2px #ccc;
+  margin : 10px;
+  padding : 10px;
+  display : inline-block;
+}
+.available-btn {
+    border: 2px solid green;
+}
+.available-btn:hover {
+    border: 2px solid green;
+    background-color: green;
+}
+.available-btn:focus {
+    border: 2px solid green;
+    background-color: green;
+}
+.booked-btn {
+    background-color: grey;
+    border: 2px solid grey;
+}
+.suggestionBloc{
+    border: 1px solid #eee;
+    box-shadow: 0 2px 2px #ccc;
+    margin: 10px;
+    padding: 10px;
+    display: inline-block;
+    background-color: #eee;
+}
+.weekend{
+    background-color: grey;
+}
+.suggestionBtn{
+    z-index: 99999 !important;
+    padding: 5px !important;
+}
+.suggestionBloc p {
+    margin: 0 !important;
+}
+.available-btn:disabled:hover {
+    border: none !important;
+    background-color: grey !important;
+}
+.available-btn:disabled {
+    display: none;
+}
