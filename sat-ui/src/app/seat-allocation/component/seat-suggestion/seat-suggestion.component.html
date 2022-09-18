@@ -1,0 +1,27 @@
+<div class="d-flex suggestionBloc">
+    <ng-container *ngFor="let weekday of datesSuggestions">
+        <div class="card" [class.weekend]="weekday.isWeekendOrHoliday">
+            <p>{{weekday.day | date}}</p>
+            <p>{{showFullDay(weekday.day)}}</p>
+            <ng-container *ngIf="weekday.isWeekendOrHoliday then weekend else checkAvailability">
+            </ng-container>
+            <button class= "btn btn-lg btn-block suggestionBtn" [ngClass]="seatDetail.booked === true ? 'booked-btn': 'available-btn'" [disabled]="weekday.isWeekendOrHoliday" (click)="bookSeat(weekday)">Book</button>
+        </div>
+        <ng-template #weekend>
+        <p style="color: pink; cursor:default">Not&nbsp;Available</p>
+        </ng-template>
+        <ng-template #checkAvailability>
+            <ng-container *ngIf="seatDetail.booked === true then notAvailable else available"></ng-container>
+        </ng-template>
+        <ng-template #notAvailable>
+            <p style="color: pink; cursor:default">Not&nbsp;Available</p>
+        </ng-template>
+        <ng-template #available>
+            <p style="color: green; cursor:pointer">Available</p>
+        </ng-template>
+    </ng-container>
+    <div><span style="font-size: 25px;
+        font-weight: bold;
+        cursor: pointer;" (click)="closeSuggestion()">X</span></div>
+</div>
+

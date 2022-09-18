@@ -1,0 +1,41 @@
+.seat {
+    border: 1px solid grey;
+    width: 41px;
+    height: 35px;
+    box-shadow : 0 2px 2px #ccc;
+    margin : 1px;
+    padding : 1px;
+    display : inline-block;
+    cursor:pointer;
+    border-radius: 2px;
+    font-size:14px;
+}
+.seat:hover {
+    box-shadow : 0 4px 4px #ccc;
+}
+.booked {
+    border: 1px solid grey;
+    background-color: grey;
+}
+.booked:hover {
+    cursor:default;
+}
+.available {
+    border: 1px solid green;
+    background-color: white;
+}
+.selected {
+    border: 1px solid pink;
+    background-color: pink;
+}
+
+.can-book-false{
+    border: none !important;
+    background-color: #ffffff;
+    box-shadow: none;
+    color: #ffffff;
+    cursor: default !important;
+}
+.can-book-false:hover{
+    box-shadow: none !important;  
+}

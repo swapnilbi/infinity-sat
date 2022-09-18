@@ -15,9 +15,13 @@ import { SplitAllotmentComponent } from './component/split-allotment/split-allot
 import { ReservationComponent } from './component/reservation/reservation.component';
 import { ReservationHistoryComponent } from './component/reservation-history/reservation-history.component';
 import { ViewReservationComponent } from './component/view-reservation/view-reservation.component';
+import { FloorPlanComponent } from './component/floor-plan/floor-plan.component';
+import { SeatComponent } from './component/seat/seat.component';
+import { SeatSuggestionComponent } from './component/seat-suggestion/seat-suggestion.component';
+import {OverlayModule} from '@angular/cdk/overlay';
 
 @NgModule({
-  declarations: [        
+  declarations: [
     SatAppComponent,
     SpaceAllotmentComponent,
     CreateAllotmentComponent,
@@ -25,20 +29,24 @@ import { ViewReservationComponent } from './component/view-reservation/view-rese
     SplitAllotmentComponent,
     ReservationComponent,
     ReservationHistoryComponent,
-    ViewReservationComponent        
+    ViewReservationComponent,
+    FloorPlanComponent,
+    SeatComponent,
+    SeatSuggestionComponent
   ],
-  imports: [    
+  imports: [
     CommonModule,
-    AgGridModule,   
+    AgGridModule,
     BsDatepickerModule,
     ModalModule.forRoot(),
-    FormsModule, 
-    SatAppRoutingModule,     
-    AppCommonModule,                
-    ReactiveFormsModule,    
-    FormsModule,    
-    SweetAlert2Module.forRoot()    
+    FormsModule,
+    SatAppRoutingModule,
+    AppCommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    SweetAlert2Module.forRoot(),
+    OverlayModule
   ],
-  providers: []  
+  providers: []
 })
 export class SatModule { }
