@@ -1,0 +1,48 @@
+<div class="col-12">
+    <h1>New Reservation</h1>
+</div>
+<form
+  class="form-horizontal mb-2 d-flex"
+  [formGroup]="searchSeat"
+  role="form"
+  (ngSubmit)="searchSeats()"
+>
+  <div class="me-4">
+    <mat-form-field>
+      <mat-label>Select Building</mat-label>
+      <mat-select formControlName="building">
+        <mat-option *ngFor="let building of buildingList"value="{{building.id}}">{{building.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="me-4"  *ngIf="isFloorSelctionShown">
+    <mat-form-field>
+      <mat-label>Select Floor</mat-label>
+      <mat-select formControlName="floor">
+        <mat-option *ngFor="let floor of floorListForm$ | async"value="{{floor.id}}">{{floor.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="me-4"  *ngIf="isZoneSelctionShown">
+    <mat-form-field>
+      <mat-label>Select Zone</mat-label>
+      <mat-select formControlName="zone">
+        <mat-option *ngFor="let zone of zoneListForm$ | async"value="{{zone.id}}">{{zone.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="me-4" *ngIf="isbookingDateSelctionShown">
+    <mat-form-field>
+      <mat-label>Date</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="bookingDate" />
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+<div class="d-block">
+    <button type="submit" class="btn btn-primary" [disabled]="searchSeat.value && !searchSeat.value">Submit</button>
+</div>
+</form>
+<pre>{{ searchSeat.value | json }}</pre>
+

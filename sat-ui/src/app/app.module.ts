@@ -7,7 +7,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppCommonModule } from './common/common.module';
-
+import { MaterialModule } from '../app/seat-allocation/material.module';
 @NgModule({
   declarations: [
     AppComponent       
@@ -18,7 +18,8 @@ import { AppCommonModule } from './common/common.module';
     BrowserAnimationsModule,        
     AppRoutingModule,    
     AuthenticationModule,
-    HttpClientModule 
+    HttpClientModule,
+    MaterialModule 
   ],
   providers: [      
     {
