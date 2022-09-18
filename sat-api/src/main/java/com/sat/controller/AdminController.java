@@ -4,6 +4,7 @@ import com.sat.entity.*;
 import com.sat.exception.BusinessException;
 import com.sat.model.Response;
 import com.sat.service.IAdminService;
+import com.sat.utility.SecurityHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -42,6 +43,13 @@ public class AdminController {
 	@PreAuthorize("hasAnyAuthority('ADMIN','EMPLOYEE')")
 	public Response<List<OEStructure>> getOeLists(@PathVariable Long departmentId) {
 		List<OEStructure> oeStructureList = adminService.getOEStructures(departmentId);
+		return new Response<>(oeStructureList);
+	}
+
+	@GetMapping("oe-structures/childrens")
+	@PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
+	public Response<List<OEStructure>> getChildOeStructures() {
+		List<OEStructure> oeStructureList = adminService.getChildOeStructures(SecurityHelper.getEmployeeId());
 		return new Response<>(oeStructureList);
 	}
 

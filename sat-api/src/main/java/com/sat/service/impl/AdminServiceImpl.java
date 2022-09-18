@@ -4,6 +4,7 @@ import com.sat.entity.*;
 import com.sat.exception.BusinessException;
 import com.sat.repository.*;
 import com.sat.service.IAdminService;
+import com.sat.service.IEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,9 @@ public class AdminServiceImpl implements IAdminService {
 
 	@Autowired
 	FloorRepository floorRepository;
+
+	@Autowired
+	IEmployeeService employeeService;
 
 	@Override
 	public Department createDepartment(Department department) throws BusinessException {
@@ -136,5 +140,11 @@ public class AdminServiceImpl implements IAdminService {
 	@Override
 	public List<Zone> getZones(Long floorId) {
 		return zoneRepository.findByFloorId(floorId);
+	}
+
+	@Override
+	public List<OEStructure> getChildOeStructures(Long userId) {
+		Employee employee = employeeService.getEmployeeById(userId).get();
+		return oeStructureRepository.findByParentId(employee.getOeId());
 	}
 }

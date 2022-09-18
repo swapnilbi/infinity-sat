@@ -5,6 +5,7 @@ import com.sat.exception.BusinessException;
 import com.sat.model.AllotmentDetails;
 import com.sat.model.AllotmentInput;
 import com.sat.model.CreateAllotmentDetails;
+import com.sat.model.SplitAllotmentInput;
 import com.sat.repository.SeatAllotmentRepository;
 import com.sat.service.IAdminService;
 import com.sat.service.IAllotmentService;
@@ -111,9 +112,42 @@ public class AllotmentService implements IAllotmentService {
 		List<SeatAllotment> seatAllotmentList = seatAllotmentRepository.findByDivisionId(employee.getOeId());
 		if(seatAllotmentList!=null && !seatAllotmentList.isEmpty()){
 			for(SeatAllotment seatAllotment : seatAllotmentList){
-				allotmentDetailsList.add(getAllotmentDetails(seatAllotment));
+				AllotmentDetails allotmentDetails = getAllotmentDetails(seatAllotment);
+				List<SeatAllotment> seatAllotments = seatAllotmentRepository.findByParentId(seatAllotment.getId());
+				allotmentDetails.setSplittedAllotments(seatAllotments);
+				allotmentDetailsList.add(allotmentDetails);
 			}
 		}
 		return allotmentDetailsList;
+	}
+
+	@Override
+	public List<AllotmentDetails> getSplittedAllotments(Long employeeId) {
+		Employee employee = employeeService.getEmployeeById(employeeId).get();
+		List<AllotmentDetails> allotmentDetailsList = new ArrayList<>();
+		List<OEStructure> oeStructureList = adminService.getChildOeStructures(employee.getId());
+		if(oeStructureList!=null && !oeStructureList.isEmpty()){
+			List<Long> childOeList =  oeStructureList.stream().map(t-> t.getId()).collect(Collectors.toList());
+			List<SeatAllotment> seatAllotmentList = seatAllotmentRepository.findByDivisionIds(childOeList);
+			if(seatAllotmentList!=null && !seatAllotmentList.isEmpty()){
+				for(SeatAllotment seatAllotment : seatAllotmentList){
+					allotmentDetailsList.add(getAllotmentDetails(seatAllotment));
+				}
+			}
+		}
+		return allotmentDetailsList;
+	}
+
+	@Override
+	public SeatAllotment splitAllotment(SplitAllotmentInput splitAllotmentInput) {
+		SeatAllotment parentAllotment = seatAllotmentRepository.findById(splitAllotmentInput.getParentId()).get();
+		SeatAllotment seatAllotment = new SeatAllotment();
+		seatAllotment.setFloorId(parentAllotment.getFloorId());
+		seatAllotment.setZoneId(parentAllotment.getZoneId());
+		seatAllotment.setMaxNoSeats(splitAllotmentInput.getNoOfSeats());
+		seatAllotment.setDivisionId(splitAllotmentInput.getDivisionId());
+		seatAllotment.setParentId(splitAllotmentInput.getParentId());
+		seatAllotmentRepository.save(seatAllotment);
+		return seatAllotment;
 	}
 }

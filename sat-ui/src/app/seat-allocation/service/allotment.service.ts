@@ -9,6 +9,8 @@ import { AppConfig } from '../../common/app.config';
 import { HttpHelper } from '../../common/utility/utility';
 import { Response } from '../../common/model/response.model';
 import { SpaceCapacity } from '../model/space-capacity.model';
+import { Division } from '../model/division.model';
+import { SplitAllotmentInput } from '../model/split-allotment-input.model';
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +40,19 @@ export class AllotmentService {
       tap(event => {})
     );
   }
+
+  public getSplittedAllotmentList(): Observable<Array<AllotmentDetails>>{        
+    const serviceUrl = AppConfig.SERVICE_URL.GET_SPLITTED_ALLOTMENTS_URL;    
+    return this.httpClient.get<Response<Array<AllotmentDetails>>>(serviceUrl)
+    .pipe(
+      map((data) => {
+        return data.data;
+      }),
+      tap(event => {})
+    );
+  }
+
+  
 
   public getAllotmentsByZone(zoneId : number): Observable<Array<AllotmentDetails>>{        
     let queryParams: any = {
@@ -79,6 +94,17 @@ export class AllotmentService {
   public createAllotment(createAllotmentForm : CreateAllotmentInput): Observable<any>{        
     const serviceUrl = AppConfig.SERVICE_URL.CREATE_ALLOTMENT;    
     return this.httpClient.post<Response<any>>(serviceUrl,createAllotmentForm)
+    .pipe(
+      map((data) => {
+        return data.data;
+      }),
+      tap(event => {})
+    );
+  }
+
+  public splitAllotment(splitAllotmentInput : SplitAllotmentInput): Observable<any>{        
+    const serviceUrl = AppConfig.SERVICE_URL.SPLIT_ALLOTMENT;    
+    return this.httpClient.post<Response<any>>(serviceUrl,splitAllotmentInput)
     .pipe(
       map((data) => {
         return data.data;

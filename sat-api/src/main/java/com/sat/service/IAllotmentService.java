@@ -6,6 +6,7 @@ import com.sat.exception.BusinessException;
 import com.sat.model.AllotmentDetails;
 import com.sat.model.AllotmentInput;
 import com.sat.model.CreateAllotmentDetails;
+import com.sat.model.SplitAllotmentInput;
 
 import java.util.List;
 
@@ -22,4 +23,8 @@ public interface IAllotmentService {
     List<SeatAllotment> getAllotmentByZone(Long zoneId);
 
     List<AllotmentDetails> getManagerAllotmentList(Long employeeId);
+
+    List<AllotmentDetails> getSplittedAllotments(Long employeeId);
+
+    SeatAllotment splitAllotment(SplitAllotmentInput splitAllotmentInput);
 }

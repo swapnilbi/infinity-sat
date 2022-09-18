@@ -14,7 +14,8 @@
       <th scope="col">Floor</th>
       <th scope="col">Zone</th>
       <th scope="col">Division - OE Code</th>
-      <th scope="col">Seats</th>
+      <th scope="col">Total Seats</th>
+      <th scope="col">Seats Alloted</th>
       <th scope="col">Action</th>      
     </tr>
     </thead>
@@ -30,7 +31,8 @@
         </td>
         <td>{{allotment.divisionName}} - {{allotment.oeCode}}</td>
         <td>{{allotment.noOfSeats}}</td>
-        <td><button class="btn btn-primary btn-sm">Split</button></td>        
+        <td>{{allotment.allotedSeats}}</td>
+        <td><button class="btn btn-primary btn-sm" (click)="splitAllotment(allotment)">Split</button></td>        
       </tr>  
     </tbody>
   </table>

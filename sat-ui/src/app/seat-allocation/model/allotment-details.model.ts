@@ -9,5 +9,6 @@ export interface AllotmentDetails {
 	fromDate? : Date
 	endDate? : Date
 	divisionName : string,
+	allotedSeats? : number,
 	oeCode : string
 }

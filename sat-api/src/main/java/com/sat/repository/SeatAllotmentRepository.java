@@ -5,6 +5,7 @@ import com.sat.entity.SeatAllotment;
 import com.sat.entity.SpaceCapacity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -32,5 +33,10 @@ public interface SeatAllotmentRepository extends JpaRepository<SeatAllotment, Lo
 
     List<SeatAllotment> findByZoneId(Long zoneId);
 
-    List<SeatAllotment> findByDivisionId(Long divisonId);
+    List<SeatAllotment> findByParentId(Long parentId);
+
+    List<SeatAllotment> findByDivisionId(Long divisinId);
+
+    @Query(value = "SELECT u FROM SeatAllotment u WHERE u.divisionId IN :divisionIdList")
+    List<SeatAllotment> findByDivisionIds(@Param("divisionIdList") List<Long> divisionIdList);
 }

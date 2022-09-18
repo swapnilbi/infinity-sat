@@ -3,10 +3,7 @@ package com.sat.controller;
 import com.sat.entity.SeatAllotment;
 import com.sat.entity.SpaceCapacity;
 import com.sat.exception.BusinessException;
-import com.sat.model.AllotmentDetails;
-import com.sat.model.AllotmentInput;
-import com.sat.model.CreateAllotmentDetails;
-import com.sat.model.Response;
+import com.sat.model.*;
 import com.sat.service.IAllotmentService;
 import com.sat.utility.SecurityHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +33,13 @@ public class SpaceAllocationController {
         return new Response<>(seatAllotment);
     }
 
+    @PostMapping("allotment/split")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
+    public Response<SeatAllotment> splitAllotment(@RequestBody SplitAllotmentInput splitAllotmentInput) throws BusinessException {
+        SeatAllotment seatAllotment = allotmentService.splitAllotment(splitAllotmentInput);
+        return new Response<>(seatAllotment);
+    }
+
     @GetMapping("allotment/zone/{zoneId}")
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public Response<List<SeatAllotment>> getAllotmentByZone(@PathVariable Long zoneId) throws BusinessException {
@@ -54,6 +58,14 @@ public class SpaceAllocationController {
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public Response<List<AllotmentDetails>> getAllotmentList() throws BusinessException {
         List<AllotmentDetails> allotmentDetails = allotmentService.getAllotmentList();
+        return new Response<>(allotmentDetails);
+    }
+
+
+    @GetMapping("allotment/splits")
+    @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
+    public Response<List<AllotmentDetails>> getSplittedAllotmentList() throws BusinessException {
+        List<AllotmentDetails> allotmentDetails = allotmentService.getSplittedAllotments(SecurityHelper.getEmployeeId());
         return new Response<>(allotmentDetails);
     }
 

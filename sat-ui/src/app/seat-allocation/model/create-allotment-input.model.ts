@@ -6,4 +6,5 @@ export interface CreateAllotmentInput {
 	fromDate? : Date,
 	toDate? : Date,
 	divisionId : number,
+	parentId? : number
 }

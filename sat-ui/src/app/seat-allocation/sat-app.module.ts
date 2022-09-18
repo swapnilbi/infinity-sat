@@ -9,17 +9,21 @@ import { SpaceAllotmentComponent } from './component/space-allotment/space-allot
 import { CreateAllotmentComponent } from './component/create-allotment/create-allotment.component';
 import { SpaceDistributeComponent } from './component/space-distribute/space-distribute.component';
 import { AgGridModule } from 'ag-grid-angular';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { SplitAllotmentComponent } from './component/split-allotment/split-allotment.component';
 
 @NgModule({
   declarations: [        
     SatAppComponent,
     SpaceAllotmentComponent,
     CreateAllotmentComponent,
-    SpaceDistributeComponent        
+    SpaceDistributeComponent,
+    SplitAllotmentComponent        
   ],
   imports: [    
     CommonModule,
     AgGridModule,   
+    ModalModule.forRoot(),
     FormsModule, 
     SatAppRoutingModule,     
     AppCommonModule,                

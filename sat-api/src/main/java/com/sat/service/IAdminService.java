@@ -43,4 +43,5 @@ public interface IAdminService {
 
     List<Zone> getZones(Long floorId);
 
+    List<OEStructure> getChildOeStructures(Long parentOeId);
 }
