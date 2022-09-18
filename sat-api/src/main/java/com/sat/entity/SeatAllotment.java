@@ -26,6 +26,8 @@ public class SeatAllotment {
 	private Date fromDate;
 	@Column(name = "to_date")
 	private Date toDate;
+	@Column(name = "parent_allotment_id")
+	private Date parentId;
 
 
 }

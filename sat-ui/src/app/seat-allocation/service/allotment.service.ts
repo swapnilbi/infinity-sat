@@ -28,6 +28,17 @@ export class AllotmentService {
     );
   }
 
+  public getManagerAllotments(): Observable<Array<AllotmentDetails>>{        
+    const serviceUrl = AppConfig.SERVICE_URL.GET_MANAGER_ALLOTMENTS_URL;    
+    return this.httpClient.get<Response<Array<AllotmentDetails>>>(serviceUrl)
+    .pipe(
+      map((data) => {
+        return data.data;
+      }),
+      tap(event => {})
+    );
+  }
+
   public getAllotmentsByZone(zoneId : number): Observable<Array<AllotmentDetails>>{        
     let queryParams: any = {
       'zoneId' : zoneId

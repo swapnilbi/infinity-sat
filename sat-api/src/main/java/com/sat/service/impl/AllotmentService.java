@@ -8,6 +8,7 @@ import com.sat.model.CreateAllotmentDetails;
 import com.sat.repository.SeatAllotmentRepository;
 import com.sat.service.IAdminService;
 import com.sat.service.IAllotmentService;
+import com.sat.service.IEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,9 @@ public class AllotmentService implements IAllotmentService {
 
 	@Autowired
 	IAdminService adminService;
+
+	@Autowired
+	IEmployeeService employeeService;
 
 	@Override
 	public SeatAllotment saveAllotment(AllotmentInput allotmentInput) throws BusinessException {
@@ -48,29 +52,34 @@ public class AllotmentService implements IAllotmentService {
 		List<SeatAllotment> seatAllotmentList = seatAllotmentRepository.findAll();
 		if(seatAllotmentList!=null && !seatAllotmentList.isEmpty()){
 			for(SeatAllotment seatAllotment : seatAllotmentList){
-				AllotmentDetails allotmentDetails = new AllotmentDetails();
-				allotmentDetails.setId(seatAllotment.getId());
-				if(seatAllotment.getDivisionId()!=null){
-					OEStructure oeStructure = adminService.getOEStructure(seatAllotment.getDivisionId());
-					if(oeStructure!=null){
-						allotmentDetails.setDivisionName(oeStructure.getName()+"-"+oeStructure.getCode());
-					}
-				}
-				Floor floor = adminService.getFloor(seatAllotment.getFloorId());
-				allotmentDetails.setFloorName(floor.getName());
-				Office office = adminService.getOffice(floor.getOfficeId());
-				allotmentDetails.setOfficeName(office.getName());
-				allotmentDetails.setNoOfSeats(seatAllotment.getMaxNoSeats());
-				if(seatAllotment.getZoneId()!=null){
-					Zone zone = adminService.getZone(seatAllotment.getZoneId());
-					if(zone !=null){
-						allotmentDetails.setZoneName(zone.getName());
-					}
-				}
-				allotmentDetailsList.add(allotmentDetails);
+				allotmentDetailsList.add(getAllotmentDetails(seatAllotment));
 			}
 		}
 		return allotmentDetailsList;
+	}
+
+	private AllotmentDetails getAllotmentDetails(SeatAllotment seatAllotment){
+		AllotmentDetails allotmentDetails = new AllotmentDetails();
+		allotmentDetails.setId(seatAllotment.getId());
+		if(seatAllotment.getDivisionId()!=null){
+			OEStructure oeStructure = adminService.getOEStructure(seatAllotment.getDivisionId());
+			if(oeStructure!=null){
+				allotmentDetails.setDivisionName(oeStructure.getName());
+				allotmentDetails.setOeCode(oeStructure.getCode());
+			}
+		}
+		Floor floor = adminService.getFloor(seatAllotment.getFloorId());
+		allotmentDetails.setFloorName(floor.getName());
+		Office office = adminService.getOffice(floor.getOfficeId());
+		allotmentDetails.setOfficeName(office.getName());
+		allotmentDetails.setNoOfSeats(seatAllotment.getMaxNoSeats());
+		if(seatAllotment.getZoneId()!=null){
+			Zone zone = adminService.getZone(seatAllotment.getZoneId());
+			if(zone !=null){
+				allotmentDetails.setZoneName(zone.getName());
+			}
+		}
+		return allotmentDetails;
 	}
 
 	@Override
@@ -93,5 +102,18 @@ public class AllotmentService implements IAllotmentService {
 	@Override
 	public List<SeatAllotment> getAllotmentByZone(Long zoneId) {
 		return seatAllotmentRepository.findByZoneId(zoneId);
+	}
+
+	@Override
+	public List<AllotmentDetails> getManagerAllotmentList(Long employeeId) {
+		Employee employee = employeeService.getEmployeeById(employeeId).get();
+		List<AllotmentDetails> allotmentDetailsList = new ArrayList<>();
+		List<SeatAllotment> seatAllotmentList = seatAllotmentRepository.findByDivisionId(employee.getOeId());
+		if(seatAllotmentList!=null && !seatAllotmentList.isEmpty()){
+			for(SeatAllotment seatAllotment : seatAllotmentList){
+				allotmentDetailsList.add(getAllotmentDetails(seatAllotment));
+			}
+		}
+		return allotmentDetailsList;
 	}
 }

@@ -8,5 +8,6 @@ export interface AllotmentDetails {
 	maxNoSeats? : number,
 	fromDate? : Date
 	endDate? : Date
-	divisionName : string
+	divisionName : string,
+	oeCode : string
 }

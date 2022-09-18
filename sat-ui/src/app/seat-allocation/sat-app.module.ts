@@ -7,15 +7,19 @@ import { SatAppRoutingModule} from './sat-app-routing.module';
 import { SatAppComponent } from './sat-app.component';
 import { SpaceAllotmentComponent } from './component/space-allotment/space-allotment.component';
 import { CreateAllotmentComponent } from './component/create-allotment/create-allotment.component';
+import { SpaceDistributeComponent } from './component/space-distribute/space-distribute.component';
+import { AgGridModule } from 'ag-grid-angular';
 
 @NgModule({
   declarations: [        
     SatAppComponent,
     SpaceAllotmentComponent,
-    CreateAllotmentComponent        
+    CreateAllotmentComponent,
+    SpaceDistributeComponent        
   ],
   imports: [    
     CommonModule,
+    AgGridModule,   
     FormsModule, 
     SatAppRoutingModule,     
     AppCommonModule,                

@@ -15,5 +15,6 @@ public class AllotmentDetails {
 	private Date fromDate;
 	private Date endDate;
 	private String divisionName;
+	private String oeCode;
 
 }

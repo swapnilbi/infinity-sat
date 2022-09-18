@@ -31,4 +31,6 @@ public interface SeatAllotmentRepository extends JpaRepository<SeatAllotment, Lo
     List<SpaceCapacity> getSpaceCapacity();
 
     List<SeatAllotment> findByZoneId(Long zoneId);
+
+    List<SeatAllotment> findByDivisionId(Long divisonId);
 }

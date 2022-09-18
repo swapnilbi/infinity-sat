@@ -57,6 +57,14 @@ export class SidebarComponent implements OnInit {
         "icon" : "fas fa-cog",
         "url" : "sat/space/allotment",          
         "roles" : ["ADMIN"]
+      },
+      {
+        "id" : 2,
+        "title" : "Space Distribution",
+        "index" : 2,
+        "icon" : "fas fa-cog",
+        "url" : "sat/space/distribute",          
+        "roles" : ["MANAGER"]
       }      
     ];
       let filteredMenuConfig : any = [];

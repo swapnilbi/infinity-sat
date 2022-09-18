@@ -4,6 +4,7 @@ import { SatAppComponent } from './sat-app.component';
 import { HomeComponent } from './component/home/home.component';
 import { SpaceAllotmentComponent } from './component/space-allotment/space-allotment.component';
 import { CreateAllotmentComponent } from './component/create-allotment/create-allotment.component';
+import { SpaceDistributeComponent } from './component/space-distribute/space-distribute.component';
 
 const routes: Routes = [  
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
           {
             path : "space/allotment/create",
             component : CreateAllotmentComponent
+          },
+          {
+            path : "space/distribute",
+            component : SpaceDistributeComponent
           },          
           {
             path : "",

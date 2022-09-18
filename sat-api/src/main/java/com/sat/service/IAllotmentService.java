@@ -20,4 +20,6 @@ public interface IAllotmentService {
     CreateAllotmentDetails initAllotment() throws BusinessException;
 
     List<SeatAllotment> getAllotmentByZone(Long zoneId);
+
+    List<AllotmentDetails> getManagerAllotmentList(Long employeeId);
 }

@@ -1,0 +1,58 @@
+<div class="container-div">
+
+  <div class="d-flex">
+    <div class="mr-auto p-2">
+        <h6>  &nbsp; <strong>My Allotment</strong></h6>
+      </div>     
+  </div>
+
+  <table class="table table-striped">
+    <thead>
+    <tr>          
+      <th scope="col">#</th>
+      <th scope="col">Office</th>
+      <th scope="col">Floor</th>
+      <th scope="col">Zone</th>
+      <th scope="col">Division - OE Code</th>
+      <th scope="col">Seats</th>
+      <th scope="col">Action</th>      
+    </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let allotment of allotmentList;  let i = index ">             
+        <th scope="row">{{i+1}}</th>
+        <td>{{allotment.officeName}}</td>
+        <td>
+          <span class="badge badge-primary"> {{allotment.floorName}}</span>              
+        <td>
+          <span class="badge badge-primary"> {{allotment.zoneName}}</span>
+        </td>
+        <td>{{allotment.divisionName}} - {{allotment.oeCode}}</td>
+        <td>{{allotment.noOfSeats}}</td>
+        <td><button class="btn btn-primary btn-sm">Split</button></td>        
+      </tr>  
+    </tbody>
+  </table>
+
+  <div class="d-flex">
+    <div class="mr-auto p-2">
+      <h6>  &nbsp; <strong>Distribution</strong></h6>
+    </div>     
+  </div>
+
+  <ag-grid-angular    
+      style="width: 100%; height:600px; position:relative; "
+      class="ag-theme-alpine"
+      [columnDefs]="columnDefs"
+      [defaultColDef]="defaultColDef"
+      [groupDefaultExpanded]=1
+      [isGroupOpenByDefault]="isGroupOpenByDefault"
+      [autoGroupColumnDef]="autoGroupColumnDef"
+      [animateRows]="true"
+      [rowGroupPanelShow]="rowGroupPanelShow"
+      [rowData]="rowData"
+      (gridReady)="onGridReady($event)"
+    ></ag-grid-angular>
+
+</div>
