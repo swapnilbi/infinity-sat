@@ -1,5 +1,5 @@
 <div class="seat pe-auto can-book-{{!seatDetail.hide}}" [ngClass]="seatDetail.booked ? 'booked' : 'available'"[class.selected]="isSelected" (click)="updateSelectSeat()" cdkOverlayOrigin #trigger="cdkOverlayOrigin">
-    {{zoneDetail['zoneName']}} {{seatDetail.number}}
+    {{zoneDetail['zoneName']}} {{seatDetail.number}}<br><span style="font-size: 12px">{{seatDetail.bookedBy}}</span>
 </div>
 <ng-template
 cdkConnectedOverlay

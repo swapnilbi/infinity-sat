@@ -44,7 +44,7 @@
         <ng-container *ngFor="let zone of section['zones']">
             <div class="col-{{12/section['zones'].length}}">
                 <ng-container *ngFor="let seatRow of zone['seats']">
-                    <div>
+                    <div class="mb-3">
                     <ng-container *ngFor="let seat of seatRow; index as i;">
                             <app-seat [zoneDetail]="getZoneDetail(zone)"[seatDetail]="seat" [isSeatSelected]="isCurrrentSeatSelected(seat, zone['zoneName'])" [searchSeatInput]="floorData.searchSeatInput"></app-seat>
                     </ng-container>

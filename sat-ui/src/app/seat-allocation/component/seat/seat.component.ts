@@ -36,6 +36,13 @@ export class SeatComponent implements OnInit {
    }
    updateSelectSeat(){
      if(!this.seatDetail.hide && !this.seatDetail.booked){
+       //this.reservationSerice.getNextSlots({zoneId: this.zoneDetail['zoneId'], seatNo: this.seatDetail.number.toString(), startDate: this.searchSeatInput.startDate}).subscribe((response) => {
+          //if(response){
+            //this.seatSuggestionInput = response;
+           // this.reservationSerice.updateSelectedSeat({seat: this.seatDetail, zoneName: this.zoneDetail['zoneName']});
+         // }
+         
+      // })
        this.reservationSerice.updateSelectedSeat({seat: this.seatDetail, zoneName: this.zoneDetail['zoneName']});
       }
    }
@@ -47,6 +54,5 @@ export class SeatComponent implements OnInit {
      this.isOpen = !this.isOpen;
    }
  }
-
 }
 

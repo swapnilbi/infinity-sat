@@ -1,11 +1,11 @@
 .seat {
     border: 1px solid grey;
-    width: 41px;
-    height: 35px;
+    width: 45px;
+    height: 60px;
     box-shadow : 0 2px 2px #ccc;
     margin : 1px;
     padding : 1px;
-    display : inline-block;
+    display : inline-grid;
     cursor:pointer;
     border-radius: 2px;
     font-size:14px;
@@ -38,4 +38,9 @@
 }
 .can-book-false:hover{
     box-shadow: none !important;  
+}
+@media (min-width: 1400px){
+    .seat {
+        width: 75px;
+    }
 }
