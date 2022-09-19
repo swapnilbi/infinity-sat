@@ -51,7 +51,7 @@ public class EmployeeController {
 	}
 
 	@GetMapping("/profile")
-	@PreAuthorize("hasAnyAuthority('EMPLOYEE','ADMIN')")
+	@PreAuthorize("hasAnyAuthority('EMPLOYEE','MANAGER','ADMIN')")
 	public Response<EmployeeProfile> getEmployeeProfile(Authentication authentication) {
 		Employee user = employeeService.getEmployeeByUsername(authentication.getName()).get();
 		return new Response<>(new EmployeeProfile(user));

@@ -40,14 +40,12 @@ public class AdminController {
 	}
 
 	@GetMapping("department/{departmentId}/oe-structure")
-	@PreAuthorize("hasAnyAuthority('ADMIN','EMPLOYEE')")
 	public Response<List<OEStructure>> getOeLists(@PathVariable Long departmentId) {
 		List<OEStructure> oeStructureList = adminService.getOEStructures(departmentId);
 		return new Response<>(oeStructureList);
 	}
 
 	@GetMapping("oe-structures/childrens")
-	@PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
 	public Response<List<OEStructure>> getChildOeStructures() {
 		List<OEStructure> oeStructureList = adminService.getChildOeStructures(SecurityHelper.getEmployeeId());
 		return new Response<>(oeStructureList);
@@ -68,7 +66,6 @@ public class AdminController {
 	}
 
 	@GetMapping("office/{officeId}/floors")
-	@PreAuthorize("hasAnyAuthority('ADMIN','EMPLOYEE')")
 	public Response<List<Floor>> getFloors(@PathVariable Long officeId) {
 		List<Floor> floorList = adminService.getFloors(officeId);
 		return new Response<>(floorList);
@@ -82,7 +79,6 @@ public class AdminController {
 	}
 
 	@GetMapping("/floor/{floorId}/zones")
-	@PreAuthorize("hasAnyAuthority('ADMIN','EMPLOYEE')")
 	public Response<List<Zone>> getZones(@PathVariable Long floorId) {
 		List<Zone> zoneList = adminService.getZones(floorId);
 		return new Response<>(zoneList);
