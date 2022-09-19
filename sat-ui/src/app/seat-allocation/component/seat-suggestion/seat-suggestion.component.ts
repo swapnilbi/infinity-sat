@@ -14,12 +14,15 @@ import { AlertService } from 'src/app/common/component/common/alert/alert-servic
 export class SeatSuggestionComponent implements OnInit {
   @Input() seatDetail: Seat;
   @Input() zoneId: number;
+  @Input() seatSuggestionInput: any;
   @Input() searchSeatInput: any;
   @Output() closeOverlay: EventEmitter<boolean> = new EventEmitter();
   datesSuggestions = [];
+  days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   constructor(private reservationService: ReservationService, private alertService: AlertService) { }
 
   ngOnInit(): void {
+    console.log("seatSuggestionInput", this.seatSuggestionInput);
       this.datesSuggestions = [{day: moment(this.searchSeatInput.startDate), isWeekendOrHoliday: this.isWeekend(moment(this.searchSeatInput.startDate))}];
       this.getNextFourDays(this.searchSeatInput.startDate);
   }
@@ -31,11 +34,11 @@ export class SeatSuggestionComponent implements OnInit {
   isWeekend(day){
     return day.day() == 6 || day.day() == 0
   }
-  bookSeat(selectedDay){
+  bookSeat(seat){
     const seatDetail: BookSeatInput = {
       zoneId : this.zoneId,
-      seatNo : this.seatDetail.number.toString(),
-      startDate : moment(selectedDay.day).toDate()
+      seatNo : seat.number.toString(),
+      startDate : seat.date
     }
     this.reservationService.bookSeat(seatDetail).subscribe((response) => {
       if(response){
@@ -48,10 +51,12 @@ export class SeatSuggestionComponent implements OnInit {
     
   }
   showFullDay(day){
-    return day.format('dddd');
+    return this.days[new Date(day).getDay()];
   }
   closeSuggestion(){
   this.closeOverlay.emit(true);
   }
-
+  isWeekendOrHoliday(bookingDate){
+    return new Date(bookingDate).getDay() == 6 || new Date(bookingDate).getDay() == 0
+  }
 }

@@ -5,5 +5,5 @@
 cdkConnectedOverlay
 [cdkConnectedOverlayOrigin]="trigger"
 [cdkConnectedOverlayOpen]="isOpen">
-<app-seat-suggestion [zoneId]= "zoneDetail['zoneId']"[seatDetail]="seatDetail" [searchSeatInput]="searchSeatInput" (closeOverlay)="isOpen = !$event"></app-seat-suggestion>
+<app-seat-suggestion [zoneId]= "zoneDetail['zoneId']"[seatDetail]="seatDetail" [searchSeatInput]="searchSeatInput" [seatSuggestionInput]="seatSuggestionInput" (closeOverlay)="isOpen = !$event"></app-seat-suggestion>
 </ng-template>

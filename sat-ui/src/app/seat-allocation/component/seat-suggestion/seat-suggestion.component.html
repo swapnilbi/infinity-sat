@@ -1,4 +1,4 @@
-<div class="d-flex suggestionBloc">
+<!-- <div class="d-flex suggestionBloc">
     <ng-container *ngFor="let weekday of datesSuggestions">
         <div class="card" [class.weekend]="weekday.isWeekendOrHoliday">
             <p>{{weekday.day | date}}</p>
@@ -12,6 +12,36 @@
         </ng-template>
         <ng-template #checkAvailability>
             <ng-container *ngIf="seatDetail.booked === true then notAvailable else available"></ng-container>
+        </ng-template>
+        <ng-template #notAvailable>
+            <p style="color: pink; cursor:default">Not&nbsp;Available</p>
+        </ng-template>
+        <ng-template #available>
+            <p style="color: green; cursor:pointer">Available</p>
+        </ng-template>
+    </ng-container>
+    <div><span style="font-size: 25px;
+        font-weight: bold;
+        cursor: pointer;" (click)="closeSuggestion()">X</span></div>
+</div> -->
+
+
+
+<div class="d-flex suggestionBloc">
+    <ng-container *ngFor="let seat of seatSuggestionInput">
+        <div class="card" [class.weekend]="isWeekendOrHoliday(seat.date) || (seat.booked === true)">
+            <p>{{seat.date | date}}</p>
+            <p>{{showFullDay(seat.date)}}</p>
+            <p *ngIf="seat.bookedBy">Booked By<br>{{seat.bookedBy}}</p>
+            <ng-container *ngIf="isWeekendOrHoliday(seat.date) then weekend else checkAvailability">
+            </ng-container>
+            <button class= "btn btn-lg btn-block suggestionBtn" [ngClass]="seat.booked === true ? 'booked-btn': 'available-btn'" [disabled]="isWeekendOrHoliday(seat.date) || (seat.booked === true)" (click)="bookSeat(seat)">Book</button>
+        </div>
+        <ng-template #weekend>
+        <p style="color: pink; cursor:default">Not&nbsp;Available</p>
+        </ng-template>
+        <ng-template #checkAvailability>
+            <ng-container *ngIf="seat.booked === true then notAvailable else available"></ng-container>
         </ng-template>
         <ng-template #notAvailable>
             <p style="color: pink; cursor:default">Not&nbsp;Available</p>
