@@ -1,7 +1,7 @@
 .seat {
     border: 1px solid grey;
-    width: 45px;
-    height: 60px;
+    width: 35px;
+    height: 40px;
     box-shadow : 0 2px 2px #ccc;
     margin : 1px;
     padding : 1px;
@@ -41,6 +41,6 @@
 }
 @media (min-width: 1400px){
     .seat {
-        width: 75px;
+        width: 50px;
     }
 }
