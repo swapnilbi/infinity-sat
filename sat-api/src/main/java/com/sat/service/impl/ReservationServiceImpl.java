@@ -90,7 +90,7 @@ public class ReservationServiceImpl implements IReservationService {
 						zoneLayout.setZoneName(zoneDetails.getName());
 						// get seat details if allotment is present
 						if(searchSeatInput.isViewAll() || allotmentsByZoneMap.containsKey(zoneDetails.getId())){
-							List<List<SeatDetails>> seatDetailsList = getSeatLayout(zoneLayoutConfig, searchSeatInput);
+							List<List<SeatDetails>> seatDetailsList = getSeatLayout(zoneLayoutConfig, searchSeatInput,allotmentsByZoneMap.get(zoneDetails.getId()));
 							zoneLayout.setSeats(seatDetailsList);
 						}
 						zonelayoutList.add(zoneLayout);
@@ -104,7 +104,18 @@ public class ReservationServiceImpl implements IReservationService {
 		return searchSeatResult;
 	}
 
-	private List<List<SeatDetails>> getSeatLayout(FloorLayoutConfig.Layout.ZoneLayout zoneLayoutConfig,SearchSeatInput searchSeatInput) throws BusinessException {
+	boolean isSeatAllowed(Integer seatNo, List<SeatAllotment> seatAllotmentList){
+		if(seatAllotmentList!=null){
+			for(SeatAllotment seatAllotment : seatAllotmentList){
+				if(seatNo >= seatAllotment.getStartSeatNo() && seatNo <= seatAllotment.getEndSeatNo()){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private List<List<SeatDetails>> getSeatLayout(FloorLayoutConfig.Layout.ZoneLayout zoneLayoutConfig,SearchSeatInput searchSeatInput,List<SeatAllotment> seatAllotmentList) throws BusinessException {
 		List<List<SeatDetails>> seatDetailsList = new ArrayList<>();
 		List<SeatBooking> seatBookings = searchSeatBookings(zoneLayoutConfig.getZoneId(),searchSeatInput.getStartDate());
 		Map<Integer, SeatBooking> seatBookingMap = seatBookings.stream().collect(Collectors.toMap(SeatBooking::getSeatNumber, item -> item));
@@ -117,8 +128,15 @@ public class ReservationServiceImpl implements IReservationService {
 						seatDetails.setBooked(true);
 						Employee employee = employeeService.getEmployeeById(seatBookingMap.get(seat).getEmployeeId()).get();
 						seatDetails.setBookedBy(employee.getFullName());
+					}else{
+						if(isSeatAllowed(seat,seatAllotmentList)){
+							seatDetails.setNumber(seat);
+						}else{
+							seatDetails.setNumber(seat);
+							seatDetails.setBooked(true);
+							seatDetails.setBookedBy("NA");
+						}
 					}
-					seatDetails.setNumber(seat);
 				}else{
 					seatDetails.setHide(true);
 				}

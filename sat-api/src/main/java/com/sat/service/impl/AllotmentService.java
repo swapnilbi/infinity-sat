@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,6 +32,12 @@ public class AllotmentService implements IAllotmentService {
 
 	@Override
 	public SeatAllotment saveAllotment(AllotmentInput allotmentInput) throws BusinessException {
+		List<SeatAllotment> seatAllotmentList = getAllotmentByZone(allotmentInput.getZoneId());
+		int seatStartNo = 1;
+		if(seatAllotmentList!=null && !seatAllotmentList.isEmpty()){
+			Collections.sort(seatAllotmentList);
+			seatStartNo = seatAllotmentList.get(seatAllotmentList.toArray().length-1).getEndSeatNo() + 1;
+		}
 		SeatAllotment seatAllotment = new SeatAllotment();
 		seatAllotment.setFloorId(allotmentInput.getFloorId());
 		seatAllotment.setZoneId(allotmentInput.getZoneId());
@@ -38,6 +45,8 @@ public class AllotmentService implements IAllotmentService {
 		seatAllotment.setDivisionId(allotmentInput.getDivisionId());
 		seatAllotment.setFromDate(allotmentInput.getFromDate());
 		seatAllotment.setToDate(allotmentInput.getToDate());
+		seatAllotment.setStartSeatNo(seatStartNo);
+		seatAllotment.setEndSeatNo(seatStartNo+allotmentInput.getNoOfSeats()-1);
 		seatAllotmentRepository.save(seatAllotment);
 		return seatAllotment;
 	}
@@ -74,6 +83,8 @@ public class AllotmentService implements IAllotmentService {
 		Office office = adminService.getOffice(floor.getOfficeId());
 		allotmentDetails.setOfficeName(office.getName());
 		allotmentDetails.setNoOfSeats(seatAllotment.getMaxNoSeats());
+		allotmentDetails.setStartSeatNo(seatAllotment.getStartSeatNo());
+		allotmentDetails.setEndSeatNo(seatAllotment.getEndSeatNo());
 		if(seatAllotment.getZoneId()!=null){
 			Zone zone = adminService.getZone(seatAllotment.getZoneId());
 			if(zone !=null){
@@ -88,15 +99,7 @@ public class AllotmentService implements IAllotmentService {
 		CreateAllotmentDetails allotmentDetails = new CreateAllotmentDetails();
 		List<Office> officeList = adminService.getOfficeList();
 		allotmentDetails.setOfficeList(officeList);
-		if(officeList!=null && !officeList.isEmpty()){
-			List<Long> departmentIds = new ArrayList<>();
-			for(Office office : officeList){
-				if(office.getDepartmentList()!=null){
-					departmentIds.addAll(office.getDepartmentList().stream().map(d -> d.getId()).collect(Collectors.toList()));
-				}
-			}
-			allotmentDetails.setDivisionList(adminService.getOEStructures(departmentIds));
-		}
+		allotmentDetails.setDivisionList(adminService.getOEStructuresByLevel(1));
 		return allotmentDetails;
 	}
 
@@ -151,11 +154,19 @@ public class AllotmentService implements IAllotmentService {
 	@Override
 	public SeatAllotment splitAllotment(SplitAllotmentInput splitAllotmentInput) {
 		SeatAllotment parentAllotment = seatAllotmentRepository.findById(splitAllotmentInput.getParentId()).get();
+		List<SeatAllotment> seatAllotmentList = seatAllotmentRepository.findByParentId(parentAllotment.getId());
+		int seatStartNo = parentAllotment.getStartSeatNo();
+		if(seatAllotmentList!=null && !seatAllotmentList.isEmpty()){
+			Collections.sort(seatAllotmentList);
+			seatStartNo = seatAllotmentList.get(seatAllotmentList.toArray().length-1).getEndSeatNo() + 1;
+		}
 		SeatAllotment seatAllotment = new SeatAllotment();
 		seatAllotment.setFloorId(parentAllotment.getFloorId());
 		seatAllotment.setZoneId(parentAllotment.getZoneId());
 		seatAllotment.setMaxNoSeats(splitAllotmentInput.getNoOfSeats());
 		seatAllotment.setDivisionId(splitAllotmentInput.getDivisionId());
+		seatAllotment.setStartSeatNo(seatStartNo);
+		seatAllotment.setEndSeatNo(seatStartNo+splitAllotmentInput.getNoOfSeats()-1);
 		seatAllotment.setParentId(splitAllotmentInput.getParentId());
 		seatAllotmentRepository.save(seatAllotment);
 		return seatAllotment;

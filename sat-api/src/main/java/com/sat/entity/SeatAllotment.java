@@ -8,7 +8,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "seat_allotment")
-public class SeatAllotment {
+public class SeatAllotment implements Comparable<SeatAllotment> {
 
 	@Id
 	@GeneratedValue
@@ -33,4 +33,17 @@ public class SeatAllotment {
 	@Column(name = "end_seat_no")
 	private Integer endSeatNo;
 
+	@Override
+	public int compareTo(SeatAllotment o) {
+		if(this.getStartSeatNo()!=null && o.getStartSeatNo()!=null){
+			return this.getStartSeatNo().compareTo(o.getStartSeatNo());
+		}
+		if(this.getStartSeatNo()!=null){
+			return 1;
+		}
+		if(o.getStartSeatNo()!=null){
+			return -1;
+		}
+		return  0;
+	}
 }

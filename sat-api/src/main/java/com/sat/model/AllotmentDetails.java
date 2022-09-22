@@ -3,6 +3,7 @@ package com.sat.model;
 import com.sat.entity.SeatAllotment;
 import lombok.Data;
 
+import javax.persistence.Column;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +19,8 @@ public class AllotmentDetails {
 	private Date endDate;
 	private String divisionName;
 	private String oeCode;
+	private Integer startSeatNo;
+	private Integer endSeatNo;
 	private List<SeatAllotment> splittedAllotments;
 
 	public Integer getAllotedSeats(){

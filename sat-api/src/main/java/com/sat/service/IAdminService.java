@@ -25,6 +25,8 @@ public interface IAdminService {
 
     List<OEStructure> getOEStructures(List<Long> departmentIds);
 
+    List<OEStructure> getOEStructuresByLevel(Integer level);
+
     Office getOffice(Long id);
 
     Office createOffice(Office office) throws BusinessException;

@@ -18,4 +18,5 @@ public interface OEStructureRepository extends JpaRepository<OEStructure, Long> 
     @Query(value = "SELECT u FROM OEStructure u WHERE u.departmentId IN :names")
     List<OEStructure> findByDepartmentId(@Param("names") List<Long> departmentIds);
 
+    List<OEStructure> findByLevel(Integer level);
 }

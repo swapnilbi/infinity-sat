@@ -86,6 +86,11 @@ public class AdminServiceImpl implements IAdminService {
 	}
 
 	@Override
+	public List<OEStructure> getOEStructuresByLevel(Integer level) {
+		return oeStructureRepository.findByLevel(level);
+	}
+
+	@Override
 	public Office getOffice(Long id) {
 		return officeRepository.getById(id);
 	}
