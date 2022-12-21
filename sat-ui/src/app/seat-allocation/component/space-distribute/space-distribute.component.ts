@@ -48,7 +48,9 @@ export class SpaceDistributeComponent implements OnInit {
     { field: 'zoneName', rowGroup: true, enableRowGroup: true },
     { field: 'divisionName', enableRowGroup: true },
     { field: 'oeCode', enableRowGroup: true, headerName: 'OE Code' },
-    { field: 'noOfSeats', headerName: 'Seats Alloted' }    
+    { field: 'noOfSeats', headerName: 'Seats Alloted' },
+    { field: 'startSeatNo', headerName: 'Start Seat No' },   
+    { field: 'endSeatNo', headerName: 'End Seat No' }        
   ];
 
   public isGroupOpenByDefault: (

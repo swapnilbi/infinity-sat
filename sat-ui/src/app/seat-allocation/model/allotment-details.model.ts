@@ -10,5 +10,7 @@ export interface AllotmentDetails {
 	endDate? : Date
 	divisionName : string,
 	allotedSeats? : number,
+	startSeatNo? : number,
+	endSeatNo? : number,
 	oeCode : string
 }

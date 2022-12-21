@@ -16,8 +16,6 @@ public interface IAllotmentService {
 
     List<SpaceCapacity> getSpaceCapacity();
 
-    List<AllotmentDetails> getAllotmentList();
-
     CreateAllotmentDetails initAllotment() throws BusinessException;
 
     List<SeatAllotment> getAllotmentByZone(Long zoneId);
@@ -32,4 +30,6 @@ public interface IAllotmentService {
     SeatAllotment splitAllotment(SplitAllotmentInput splitAllotmentInput);
 
     void deleteAllotment(Long id) throws BusinessException;
+
+    List<AllotmentDetails> getAdminAllotmentList(Long employeeId);
 }

@@ -64,7 +64,7 @@ public class SpaceAllocationController {
     @GetMapping("allotments")
     @PreAuthorize("hasAnyAuthority('ADMIN','MANAGER')")
     public Response<List<AllotmentDetails>> getAllotmentList() throws BusinessException {
-        List<AllotmentDetails> allotmentDetails = allotmentService.getAllotmentList();
+        List<AllotmentDetails> allotmentDetails = allotmentService.getAdminAllotmentList(SecurityHelper.getEmployeeId());
         return new Response<>(allotmentDetails);
     }
 

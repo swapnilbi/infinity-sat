@@ -56,6 +56,7 @@ export class ReservationComponent implements OnInit {
     this.reservationService.doRefreshSearch().subscribe((doRefresh) => {
       if(doRefresh){
           this.searchSeatApiCall(this.floorData.searchSeatInput);
+          this.reservationService.updateRefreshSearch(false);
       }
     })
   }

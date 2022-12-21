@@ -25,6 +25,7 @@ public interface SeatAllotmentRepository extends JpaRepository<SeatAllotment, Lo
             "    zone z ON f.id = z.floor_id\n" +
             "        LEFT JOIN (\n" +
             "        select zone_id, sum(max_no_seats) alloted_seats from seat_allotment s\n" +
+            "        where parent_allotment_id is null   "+
             "        group by zone_id\n" +
             "\t ) as sa        \n" +
             "    ON z.id = sa.zone_id\n" +
@@ -41,4 +42,7 @@ public interface SeatAllotmentRepository extends JpaRepository<SeatAllotment, Lo
 
     @Query(value = "SELECT u FROM SeatAllotment u WHERE u.divisionId IN :divisionIdList")
     List<SeatAllotment> findByDivisionIds(@Param("divisionIdList") List<Long> divisionIdList);
+
+    @Query(value = "SELECT u FROM SeatAllotment u WHERE u.parentId IS NULL")
+    List<SeatAllotment> findAllAdminAllotments();
 }

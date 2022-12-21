@@ -57,9 +57,9 @@ public class AllotmentService implements IAllotmentService {
 	}
 
 	@Override
-	public List<AllotmentDetails> getAllotmentList() {
+	public List<AllotmentDetails> getAdminAllotmentList(Long userId) {
 		List<AllotmentDetails> allotmentDetailsList = new ArrayList<>();
-		List<SeatAllotment> seatAllotmentList = seatAllotmentRepository.findAll();
+		List<SeatAllotment> seatAllotmentList = seatAllotmentRepository.findAllAdminAllotments();
 		if(seatAllotmentList!=null && !seatAllotmentList.isEmpty()){
 			for(SeatAllotment seatAllotment : seatAllotmentList){
 				allotmentDetailsList.add(getAllotmentDetails(seatAllotment));
